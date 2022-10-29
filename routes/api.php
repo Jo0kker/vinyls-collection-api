@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+// api check health
+Route::get('/health', function () {
+    return response()->json(['status' => 'ok']);
+});
