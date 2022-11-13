@@ -60,7 +60,7 @@ return new class extends Migration
         ];
 
         foreach ($roles as $role => $tables) {
-            $roleModel = Role::create(['name' => $role]);
+            $roleModel = Role::create(['name' => $role, 'guard_name' => 'api']);
 
             foreach ($tables as $table => $permissions) {
                 if (!is_array($permissions)) {
