@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
+use App\Models\CollectionVinyl;
 use App\Models\User;
-use App\Models\Vinyl;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class VinylPolicy
+class CollectionVinylPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class VinylPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Vinyl  $vinyl
+     * @param  \App\Models\CollectionVinyl  $collectionVinyl
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(?User $user, Vinyl $vinyl)
+    public function view(?User $user, CollectionVinyl $collectionVinyl)
     {
         return true;
     }
@@ -41,54 +41,54 @@ class VinylPolicy
      */
     public function create(User $user)
     {
-        return true;
+        //
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Vinyl  $vinyl
+     * @param  \App\Models\CollectionVinyl  $collectionVinyl
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Vinyl $vinyl)
+    public function update(User $user, CollectionVinyl $collectionVinyl)
     {
-        return true;
+        //
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Vinyl  $vinyl
+     * @param  \App\Models\CollectionVinyl  $collectionVinyl
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Vinyl $vinyl)
+    public function delete(User $user, CollectionVinyl $collectionVinyl)
     {
-        return true;
+        //
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Vinyl  $vinyl
+     * @param  \App\Models\CollectionVinyl  $collectionVinyl
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Vinyl $vinyl)
+    public function restore(User $user, CollectionVinyl $collectionVinyl)
     {
-        return true;
+        //
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Vinyl  $vinyl
+     * @param  \App\Models\CollectionVinyl  $collectionVinyl
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Vinyl $vinyl)
+    public function forceDelete(User $user, CollectionVinyl $collectionVinyl)
     {
-        return true;
+        //
     }
 }
