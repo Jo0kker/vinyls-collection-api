@@ -24,7 +24,7 @@ class VinylFactory extends Factory
             'artist' => fake()->name,
             'genre' => fake()->name,
             'year_released' => fake()->year,
-            'image_path' => fake()->imageUrl(),
+            'image_path' => "https://picsum.photos/300?random=" . random_int(1, 1000),
             'provenance' => fake()->name,
             'discog_id' => fake()->numberBetween(1, 10000),
             'created_at' => Carbon::now()->subDays(random_int(1, 365)),
