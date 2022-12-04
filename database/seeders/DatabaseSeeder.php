@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
     {
         User::factory(100)
             ->afterCreating(
-            function ($user) {
-                $user->roles()->attach(Role::inRandomOrder()->first());
-            }
-         )
+                function ($user) {
+                    $user->roles()->attach(Role::inRandomOrder()->first());
+                }
+            )
             ->create();
 
         User::factory()

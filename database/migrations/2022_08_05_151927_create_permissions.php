@@ -1,12 +1,9 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\PermissionRegistrar;
-
 
 return new class extends Migration
 {
@@ -27,14 +24,14 @@ return new class extends Migration
             'collections' => 'normal',
             'vinyls' => 'normal',
             'searches' => 'normal',
-            'trades' => 'normal'
+            'trades' => 'normal',
         ];
 
         $permissionsNormal = [
             'view',
             'create',
             'update',
-            'delete'
+            'delete',
         ];
 
         $permissionsSoftDeletes = [
@@ -43,7 +40,7 @@ return new class extends Migration
             'update',
             'delete',
             'restore',
-            'force_delete'
+            'force_delete',
         ];
 
         foreach ($tables as $table => $type) {
@@ -56,14 +53,14 @@ return new class extends Migration
             'Administrator' => $tables,
             'Moderator' => [
                 'users' => $permissionsNormal,
-            ]
+            ],
         ];
 
         foreach ($roles as $role => $tables) {
-            $roleModel = Role::create(['name' => $role]);
+            $roleModel = Role::create(['name' => $role, 'guard_name' => 'api']);
 
             foreach ($tables as $table => $permissions) {
-                if (!is_array($permissions)) {
+                if (! is_array($permissions)) {
                     foreach (${'permissions'.\Illuminate\Support\Str::studly($permissions)} as $permission) {
                         $roleModel->givePermissionTo("{$permission} {$table}");
                     }
