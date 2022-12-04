@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\CollectionVinyl;
-use App\Models\Vinyl;
 use Illuminate\Database\Seeder;
 
 class CollectionVinylSeeder extends Seeder

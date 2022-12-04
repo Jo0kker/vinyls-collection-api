@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\CollectionVinyl;
-use Illuminate\Http\Request;
-use Orion\Http\Controllers\Controller as Controller;
 
-
-class CollectionVinylController extends Controller
+class CollectionVinylsController extends \Orion\Http\Controllers\Controller
 {
     protected $model = CollectionVinyl::class;
 

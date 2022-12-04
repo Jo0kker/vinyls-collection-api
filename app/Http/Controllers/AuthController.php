@@ -14,7 +14,7 @@ class AuthController extends Controller
             'name' => 'required|max:55',
             'email' => 'email|required|unique:users',
             'password' => 'required|confirmed',
-            'password_confirmation' => 'required'
+            'password_confirmation' => 'required',
         ]);
 
         $validatedData['password'] = bcrypt($request->password);
@@ -47,14 +47,14 @@ class AuthController extends Controller
             'token' => 'required',
             'email' => 'required|email',
             'password' => 'required|confirmed',
-            'password_confirmation' => 'required'
+            'password_confirmation' => 'required',
         ]);
 
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
                 $user->forceFill([
-                    'password' => bcrypt($password)
+                    'password' => bcrypt($password),
                 ])->save();
             }
         );

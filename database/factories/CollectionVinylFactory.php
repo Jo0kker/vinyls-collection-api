@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-
 use App\Models\Collection;
 use App\Models\FormatVinyls;
 use App\Models\Vinyl;
@@ -18,6 +17,7 @@ class CollectionVinylFactory extends Factory
      * Define the model's default state.
      *
      * @return array<string, mixed>
+     *
      * @throws \Exception
      */
     public function definition()
