@@ -10,6 +10,16 @@ class CollectionVinyl extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'collection_id',
+        'vinyl_id',
+        'format_vinyl_id',
+        'cover_state',
+        'year_purchased',
+        'price',
+        'description'
+    ];
+
     /**
      * @return BelongsTo<Collection>
      */

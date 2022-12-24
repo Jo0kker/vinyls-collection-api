@@ -31,6 +31,7 @@ return new class extends Migration
             $table->text('audio_equipment')->nullable();
             $table->text('influence')->nullable();
             $table->text('description')->nullable();
+            $table->string('avatar')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

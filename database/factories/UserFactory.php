@@ -34,6 +34,7 @@ class UserFactory extends Factory
             'audio_equipment' => fake()->paragraph(),
             'influence' => fake()->paragraph(),
             'description' => fake()->paragraph(),
+            'avatar' => 'https://picsum.photos/300?random='.random_int(3000, 10000),
             'created_at' => Carbon::now()->subDays(random_int(1, 365)),
         ];
     }

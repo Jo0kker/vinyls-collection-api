@@ -19,4 +19,14 @@ class Trade extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get the vinyl.
+     *
+     * @return BelongsTo<Vinyl>
+     */
+    public function vinyl(): BelongsTo
+    {
+        return $this->belongsTo(Vinyl::class);
+    }
 }

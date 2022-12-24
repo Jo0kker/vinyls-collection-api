@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Trade;
+use App\Services\DiscogsService;
+use Illuminate\Database\Eloquent\Model;
 use Orion\Http\Controllers\Controller as Controller;
+use Orion\Http\Requests\Request;
 
 class TradesController extends Controller
 {
@@ -11,6 +14,26 @@ class TradesController extends Controller
 
     public function includes(): array
     {
-        return ['user'];
+        return ['user', 'vinyl'];
+    }
+
+    public function sortableBy(): array
+    {
+        return ['created_at', 'updated_at'];
+    }
+
+    /**
+     * Add discogs data to the trade
+     */
+    protected function afterShow(Request $request, Model $entity)
+    {
+        $discogs = new DiscogsService();
+        try {
+            $entity->discogs = $discogs->getVinylDataById($entity->discog_id);
+        } catch (\Exception $e) {
+            $entity->discogs = [];
+        }
+
+        return $entity;
     }
 }

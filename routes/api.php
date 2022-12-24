@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\SearchesResourceController;
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CollectionVinylsController;
 use App\Http\Controllers\SearchesController;
@@ -24,6 +26,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
 
+Orion::resource('users', UsersController::class);
 Orion::resource('vinyls', VinylsController::class);
 Orion::resource('collectionVinyl', CollectionVinylsController::class);
 Orion::resource('trades', TradesController::class);
