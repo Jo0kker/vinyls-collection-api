@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CollectionsController;
+use App\Http\Controllers\CollectionUserController;
 use App\Http\Controllers\SearchesResourceController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
@@ -7,6 +9,7 @@ use App\Http\Controllers\CollectionVinylsController;
 use App\Http\Controllers\SearchesController;
 use App\Http\Controllers\TradesController;
 use App\Http\Controllers\VinylsController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Orion\Facades\Orion;
@@ -28,9 +31,11 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('
 
 Orion::resource('users', UsersController::class);
 Orion::resource('vinyls', VinylsController::class);
+Orion::resource('collections', CollectionsController::class);
 Orion::resource('collectionVinyl', CollectionVinylsController::class);
 Orion::resource('trades', TradesController::class);
 Orion::resource('searches', SearchesController::class);
+Orion::hasManyResource('users', 'collections', CollectionUserController::class);
 
 Route::middleware('auth')->get('/user', function (Request $request) {
     return $request->user();

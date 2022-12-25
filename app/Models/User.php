@@ -86,6 +86,11 @@ class User extends Authenticatable
         return $this->hasMany(Collection::class);
     }
 
+    public function countCollectionVinyls(): int
+    {
+        return 12;
+    }
+
     public function sendPasswordResetNotification($token)
     {
         $url = config('WEB_URL') . '/reset-password?token=' . $token;

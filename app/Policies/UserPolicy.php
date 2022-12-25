@@ -28,7 +28,7 @@ class UserPolicy
      * @param  \App\Models\Trade  $trade
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(?User $user, Trade $trade)
+    public function view(?User $user, $trade)
     {
         return true;
     }
