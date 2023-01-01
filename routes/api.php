@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CollectionsController;
 use App\Http\Controllers\CollectionUserController;
+use App\Http\Controllers\CollectionVinylController;
 use App\Http\Controllers\SearchesResourceController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
@@ -29,6 +30,10 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
 
+Route::middleware('auth')->get('/users/me', function (Request $request) {
+    return $request->user();
+});
+
 Orion::resource('users', UsersController::class);
 Orion::resource('vinyls', VinylsController::class);
 Orion::resource('collections', CollectionsController::class);
@@ -36,10 +41,9 @@ Orion::resource('collectionVinyl', CollectionVinylsController::class);
 Orion::resource('trades', TradesController::class);
 Orion::resource('searches', SearchesController::class);
 Orion::hasManyResource('users', 'collections', CollectionUserController::class);
+Orion::hasManyResource('collections', 'collectionVinyl', CollectionVinylController::class);
 
-Route::middleware('auth')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 
 // api check health
 Route::get('/health', function () {

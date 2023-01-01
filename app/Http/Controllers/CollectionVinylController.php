@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Collection;
+use App\Models\User;
+use Orion\Http\Controllers\RelationController;
+
+class CollectionVinylController extends RelationController
+{
+    protected $model = Collection::class;
+
+    protected $relation = 'collectionVinyls';
+}
