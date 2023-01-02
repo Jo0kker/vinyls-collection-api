@@ -38,4 +38,19 @@ class DiscogsService
         ]);
         return json_decode($response->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
     }
+
+    public function search($title = '', $artist = '', $year = '')
+    {
+        $response = $this->client->request('GET', 'database/search', [
+            'query' => [
+                'title' => $title,
+                'artist' => $artist,
+                'year' => $year,
+                'type' => 'release',
+                'per_page' => 10,
+                'token' => env('DISCOGS_TOKEN'),
+            ]
+        ]);
+        return json_decode($response->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
+    }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\CollectionsController;
 use App\Http\Controllers\CollectionUserController;
 use App\Http\Controllers\CollectionVinylController;
+use App\Http\Controllers\DiscogsController;
 use App\Http\Controllers\SearchesResourceController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
@@ -43,7 +44,7 @@ Orion::resource('searches', SearchesController::class);
 Orion::hasManyResource('users', 'collections', CollectionUserController::class);
 Orion::hasManyResource('collections', 'collectionVinyl', CollectionVinylController::class);
 
-
+Route::post('discogs/search', [DiscogsController::class, 'search']);
 
 // api check health
 Route::get('/health', function () {

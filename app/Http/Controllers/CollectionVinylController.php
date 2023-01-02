@@ -11,4 +11,9 @@ class CollectionVinylController extends RelationController
     protected $model = Collection::class;
 
     protected $relation = 'collectionVinyls';
+
+    public function includes(): array
+    {
+        return ['vinyl'];
+    }
 }
