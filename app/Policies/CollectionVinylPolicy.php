@@ -65,7 +65,7 @@ class CollectionVinylPolicy
      */
     public function delete(User $user, CollectionVinyl $collectionVinyl)
     {
-        //
+        return $user->id === $collectionVinyl->collection->user_id;
     }
 
     /**

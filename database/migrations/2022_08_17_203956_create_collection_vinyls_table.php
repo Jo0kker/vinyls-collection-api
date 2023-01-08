@@ -18,11 +18,6 @@ return new class extends Migration
             $table->foreignId('collection_id')->constrained();
             $table->foreignId('vinyl_id')->constrained();
             $table->foreignId('format_vinyl_id')->nullable()->constrained();
-            $table->integer('cover_state');
-            $table->string('year_purchased')->nullable();
-            $table->double('price')->nullable();
-            $table->boolean('is_sellable')->default(false);
-            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
