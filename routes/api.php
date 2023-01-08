@@ -10,6 +10,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CollectionVinylsController;
 use App\Http\Controllers\SearchesController;
 use App\Http\Controllers\TradesController;
+use App\Http\Controllers\UsersSearchesController;
+use App\Http\Controllers\UserTradesController;
 use App\Http\Controllers\VinylsController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -43,6 +45,8 @@ Orion::resource('trades', TradesController::class);
 Orion::resource('searches', SearchesController::class);
 Orion::hasManyResource('users', 'collections', CollectionUserController::class);
 Orion::hasManyResource('collections', 'collectionVinyl', CollectionVinylController::class);
+Orion::hasManyResource('users', 'trades', UserTradesController::class);
+Orion::hasManyResource('users', 'searches', UsersSearchesController::class);
 
 Route::post('discogs/search', [DiscogsController::class, 'search']);
 
