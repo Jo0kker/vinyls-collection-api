@@ -11,4 +11,9 @@ class CollectionUserController extends RelationController
     protected $model = User::class;
 
     protected $relation = 'collections';
+
+    public function includes(): array
+    {
+        return ['vinyl'];
+    }
 }
