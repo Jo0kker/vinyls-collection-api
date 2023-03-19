@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
                     $user->roles()->attach(Role::where('name', 'Administrator')->first());
                 }
             )
-            ->create(['name' => 'Test User', 'email' => 'test@example.com']);
+            ->create(['name' => 'Test User', 'email' => 'test@exemple.com']);
         $this->call(BadgeSeeder::class);
         $this->call(FormatVinylsSeeder::class);
         $this->call(SearchSeeder::class);
