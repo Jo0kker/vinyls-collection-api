@@ -17,8 +17,7 @@ class ResetPasswordNotification extends Notification
      */
     public function __construct(
         private string $url
-    )
-    {
+    ) {
         //
     }
 

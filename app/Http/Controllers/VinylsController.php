@@ -12,7 +12,6 @@ class VinylsController extends Controller
 {
     protected $model = Vinyl::class;
 
-
     public function includes(): array
     {
         return ['user'];
@@ -31,6 +30,7 @@ class VinylsController extends Controller
         } catch (\Exception $e) {
             $entity->discogs = [];
         }
+
         return $entity;
     }
 }
