@@ -17,7 +17,7 @@ class CollectionVinyl extends Model
         'cover_state',
         'year_purchased',
         'price',
-        'description'
+        'description',
     ];
 
     /**

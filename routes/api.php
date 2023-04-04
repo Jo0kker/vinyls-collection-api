@@ -1,19 +1,17 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CollectionsController;
 use App\Http\Controllers\CollectionUserController;
 use App\Http\Controllers\CollectionVinylController;
-use App\Http\Controllers\DiscogsController;
-use App\Http\Controllers\SearchesResourceController;
-use App\Http\Controllers\UsersController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CollectionVinylsController;
+use App\Http\Controllers\DiscogsController;
 use App\Http\Controllers\SearchesController;
 use App\Http\Controllers\TradesController;
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UsersSearchesController;
 use App\Http\Controllers\UserTradesController;
 use App\Http\Controllers\VinylsController;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Orion\Facades\Orion;

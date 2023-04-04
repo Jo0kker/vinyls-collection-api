@@ -30,6 +30,7 @@ class SearchesController extends Controller
         } catch (\Exception $e) {
             $entity->discogs = [];
         }
+
         return $entity;
     }
 }

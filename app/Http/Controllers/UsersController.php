@@ -28,7 +28,6 @@ class UsersController extends Controller
 
     /**
      * add collectionVinyls count to all users on all route
-     *
      */
     public function afterIndex(Request $request, $entities)
     {
@@ -38,8 +37,7 @@ class UsersController extends Controller
                 ->where('collections.user_id', '=', $entity->id)
                 ->count();
         });
+
         return $entities;
     }
-
-
 }

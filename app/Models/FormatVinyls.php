@@ -12,8 +12,6 @@ class FormatVinyls extends Model
 
     /**
      * Get the vinyls.
-     *
-     * @return HasMany
      */
     public function vinyls(): HasMany
     {

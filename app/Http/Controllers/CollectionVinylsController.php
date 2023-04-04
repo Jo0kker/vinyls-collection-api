@@ -38,11 +38,12 @@ class CollectionVinylsController extends Controller
             $collectionVinyl->collection_id = $collection;
             $collectionVinyl->vinyl_id = $vinyl->id;
             $collectionVinyl->save();
+
             return response()->json($collectionVinyl);
         }
 
         $discogs = new DiscogsService();
-        $discogsVinyl = $discogs->getVinylDataById((int)$discogId);
+        $discogsVinyl = $discogs->getVinylDataById((int) $discogId);
         $vinyl = new Vinyl();
         $vinyl->discog_id = $discogId;
         $vinyl->label = $discogsVinyl->title;
@@ -58,6 +59,7 @@ class CollectionVinylsController extends Controller
         $collectionVinyl->collection_id = $collection;
         $collectionVinyl->vinyl_id = $vinyl->id;
         $collectionVinyl->save();
+
         return response()->json($collectionVinyl);
     }
 }
