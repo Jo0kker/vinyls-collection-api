@@ -14,7 +14,7 @@ class CollectionVinylSeeder extends Seeder
      */
     public function run()
     {
-        CollectionVinyl::factory(100)
+        CollectionVinyl::factory(10)
             ->create();
     }
 }

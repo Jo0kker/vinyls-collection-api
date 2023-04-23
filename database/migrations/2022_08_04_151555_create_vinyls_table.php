@@ -15,14 +15,16 @@ return new class extends Migration
     {
         Schema::create('vinyls', function (Blueprint $table) {
             $table->id();
-            $table->string('label');
-            $table->text('track_list');
-            $table->string('artist');
-            $table->string('genre');
-            $table->string('year_released')->nullable();
-            $table->string('image_path')->nullable();
+            $table->string('title');
+            $table->string('artist')->nullable();
+            $table->string('genre')->nullable();
+            $table->string('image')->nullable();
+            $table->json('track_list')->nullable();
+            $table->dateTime('released')->nullable();
             $table->string('provenance')->nullable();
             $table->integer('discog_id')->nullable();
+            $table->string('discog_url')->nullable();
+            $table->json('discog_videos')->nullable();
             $table->timestamps();
         });
     }

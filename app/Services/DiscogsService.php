@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
-class DiscogsService
+use AllowDynamicProperties;
+use GuzzleHttp\Exception\GuzzleException;
+
+#[AllowDynamicProperties] class DiscogsService
 {
     public function __construct()
     {
@@ -14,7 +17,7 @@ class DiscogsService
         ]);
     }
 
-    public function getVinylData($artist, $title)
+    public function getVinylData($artist, $title): object
     {
         $response = $this->client->request('GET', 'database/search', [
             'query' => [
@@ -28,7 +31,11 @@ class DiscogsService
         return json_decode($response->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
     }
 
-    public function getVinylDataById($id)
+    /**
+     * @throws GuzzleException
+     * @throws \JsonException
+     */
+    public function getVinylDataById($id): object
     {
         $response = $this->client->request('GET', 'releases/'.$id, [
             'query' => [
@@ -39,7 +46,7 @@ class DiscogsService
         return json_decode($response->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
     }
 
-    public function search($title = '', $artist = '', $year = '')
+    public function search($title = '', $artist = '', $year = ''): object
     {
         $response = $this->client->request('GET', 'database/search', [
             'query' => [

@@ -41,7 +41,7 @@ class CollectionPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -51,7 +51,7 @@ class CollectionPolicy
      */
     public function update(User $user, Search $search)
     {
-        //
+        return $user->id === $search->user_id;
     }
 
     /**
@@ -61,7 +61,7 @@ class CollectionPolicy
      */
     public function delete(User $user, Search $search)
     {
-        //
+        return $user->id === $search->user_id;
     }
 
     /**

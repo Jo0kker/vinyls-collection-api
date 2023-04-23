@@ -21,16 +21,4 @@ class VinylsController extends Controller
     {
         return ['created_at', 'updated_at'];
     }
-
-    protected function afterShow(Request $request, Model $entity)
-    {
-        $discogs = new DiscogsService();
-        try {
-            $entity->discogs = $discogs->getVinylDataById($entity->discog_id);
-        } catch (\Exception $e) {
-            $entity->discogs = [];
-        }
-
-        return $entity;
-    }
 }
