@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vinyl;
-use App\Services\DiscogsService;
-use Illuminate\Database\Eloquent\Model;
 use Orion\Http\Controllers\Controller;
-use Orion\Http\Requests\Request;
 
 class VinylsController extends Controller
 {

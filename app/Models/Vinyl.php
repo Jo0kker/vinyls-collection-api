@@ -10,6 +10,20 @@ class Vinyl extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'artist',
+        'genre',
+        'image',
+        'track_list',
+        'released',
+        'provenance',
+        'discog_id',
+        'discog_url',
+        'discog_videos',
+        'collection_id',
+    ];
+
     /**
      * Get the collection.
      *
