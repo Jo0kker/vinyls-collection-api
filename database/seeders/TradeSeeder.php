@@ -14,7 +14,7 @@ class TradeSeeder extends Seeder
      */
     public function run()
     {
-        Trade::factory(1000)
+        Trade::factory(10)
             ->create();
     }
 }

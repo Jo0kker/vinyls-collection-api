@@ -20,7 +20,6 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained();
             $table->foreignIdFor(Vinyl::class)->constrained();
             $table->string('description')->nullable();
-            $table->string('image_path')->nullable();
             $table->foreignId('format_vinyl_id')->nullable()->constrained();
             $table->timestamps();
         });

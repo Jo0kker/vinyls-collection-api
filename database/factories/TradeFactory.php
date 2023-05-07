@@ -23,7 +23,6 @@ class TradeFactory extends Factory
         return [
             'description' => fake()->text,
             'vinyl_id' => Vinyl::factory()->create()->getKey(),
-            'image_path' => 'https://picsum.photos/300?random='.random_int(5000, 10000),
             'user_id' => User::inRandomOrder()->first()->getKey(),
             'format_vinyl_id' => FormatVinyls::inRandomOrder()->first()->getKey(),
             'created_at' => Carbon::now()->subDays(random_int(1, 365)),

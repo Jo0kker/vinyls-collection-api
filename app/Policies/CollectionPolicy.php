@@ -3,7 +3,6 @@
 namespace App\Policies;
 
 use App\Models\Collection;
-use App\Models\Search;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -29,7 +28,7 @@ class CollectionPolicy
      * @param  \App\Models\Search  $search
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(?User $user, Search|Collection $search)
+    public function view(?User $user, Collection $collection)
     {
         return true;
     }
@@ -41,7 +40,7 @@ class CollectionPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -49,9 +48,9 @@ class CollectionPolicy
      *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Search $search)
+    public function update(User $user, Collection $collection)
     {
-        //
+        return $user->id === $collection->user_id;
     }
 
     /**
@@ -59,9 +58,9 @@ class CollectionPolicy
      *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Search $search)
+    public function delete(User $user, Collection $collection)
     {
-        //
+        return $user->id === $collection->user_id;
     }
 
     /**
@@ -69,7 +68,7 @@ class CollectionPolicy
      *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Search $search)
+    public function restore(User $user, Collection $collection)
     {
         //
     }
@@ -79,7 +78,7 @@ class CollectionPolicy
      *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Search $search)
+    public function forceDelete(User $user, Collection $collection)
     {
         //
     }

@@ -11,6 +11,11 @@ class Collection extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\CollectionVinyl>
      */

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vinyl;
-use App\Services\DiscogsService;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Orion\Http\Controllers\Controller;
 use Orion\Http\Requests\Request;
 
@@ -22,15 +22,11 @@ class VinylsController extends Controller
         return ['created_at', 'updated_at'];
     }
 
-    protected function afterShow(Request $request, Model $entity)
+    protected function beforeSave(Request $request, Model $entity)
     {
-        $discogs = new DiscogsService();
-        try {
-            $entity->discogs = $discogs->getVinylDataById($entity->discog_id);
-        } catch (\Exception $e) {
-            $entity->discogs = [];
+        if ($request->hasFile('image')) {
+            $entity->image = Storage::putFile('public/images', $request->file('image'));
+            $entity->image = str_replace('public', 'storage', $entity->image);
         }
-
-        return $entity;
     }
 }

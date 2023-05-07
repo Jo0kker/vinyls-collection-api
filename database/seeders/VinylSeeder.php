@@ -14,7 +14,7 @@ class VinylSeeder extends Seeder
      */
     public function run()
     {
-        Vinyl::factory(500)
+        Vinyl::factory(50)
             ->create();
     }
 }

@@ -14,7 +14,7 @@ class SearchSeeder extends Seeder
      */
     public function run()
     {
-        Search::factory(1000)
+        Search::factory(10)
             ->create();
     }
 }
