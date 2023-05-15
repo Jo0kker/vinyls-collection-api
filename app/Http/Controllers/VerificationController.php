@@ -21,16 +21,13 @@ class VerificationController extends Controller
             $user->markEmailAsVerified();
         }
 
-        return redirect()->to(env('WEB_URL').'/confirm-email');
+        return redirect()->to(env('APP_WEB').'/confirm-email');
     }
 
     public function resend()
     {
         /** @var User $user */
-//        $user = auth()->user();
-
-        //user first user
-        $user = User::first();
+        $user = auth()->user();
 
         if ($user->hasVerifiedEmail()) {
             return response()->json(['msg' => 'Email already verified.'], 400);
