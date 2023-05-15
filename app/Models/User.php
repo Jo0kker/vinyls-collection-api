@@ -26,7 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'email_verified_at'
+        'email_verified_at',
     ];
 
     /**
@@ -37,7 +37,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
-        'email_verified_at'
+        'email_verified_at',
     ];
 
     /**
@@ -92,5 +92,12 @@ class User extends Authenticatable implements MustVerifyEmail
     public function countCollectionVinyls(): int
     {
         return 12;
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $url = env('APP_URL').'/reset-password?token='.$token;
+
+        $this->notify(new ResetPasswordNotification($url));
     }
 }

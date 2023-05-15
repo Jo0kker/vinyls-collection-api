@@ -13,9 +13,7 @@ use App\Http\Controllers\UsersSearchesController;
 use App\Http\Controllers\UserTradesController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\VinylsController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Orion\Facades\Orion;
 
@@ -57,5 +55,5 @@ Route::middleware('auth')->get('email/resend', [VerificationController::class, '
 
 // api check health
 Route::get('/health', function () {
-    return response()->json(['status' => 'odfk']);
+    return response()->json(['status' => 'ok']);
 });

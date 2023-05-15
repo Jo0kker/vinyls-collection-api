@@ -9,22 +9,23 @@ use Illuminate\Notifications\Messages\MailMessage;
 
 class VerificationController extends Controller
 {
-    public function verify($user_id, Request $request) {
-        if (!$request->hasValidSignature()) {
-            return response()->json(["msg" => "Invalid/Expired url provided."], 401);
+    public function verify($user_id, Request $request)
+    {
+        if (! $request->hasValidSignature()) {
+            return response()->json(['msg' => 'Invalid/Expired url provided.'], 401);
         }
 
         $user = User::findOrFail($user_id);
 
-        if (!$user->hasVerifiedEmail()) {
+        if (! $user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
         }
 
-        return redirect()->to(env('WEB_URL'). '/confirm-email');
+        return redirect()->to(env('WEB_URL').'/confirm-email');
     }
 
-    public function resend() {
-
+    public function resend()
+    {
         /** @var User $user */
 //        $user = auth()->user();
 
@@ -32,7 +33,7 @@ class VerificationController extends Controller
         $user = User::first();
 
         if ($user->hasVerifiedEmail()) {
-            return response()->json(["msg" => "Email already verified."], 400);
+            return response()->json(['msg' => 'Email already verified.'], 400);
         }
 
         VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
@@ -43,12 +44,12 @@ class VerificationController extends Controller
                     'Avant de commencer, vous devez confirmer votre adresse e-mail en cliquant sur le lien ci-dessous.',
                 ])
                 ->view('emails.verify-email')
-                ->greeting('Bonjour ' . $notifiable->name)
+                ->greeting('Bonjour '.$notifiable->name)
                 ->action('Je confirme mon addresse mail', $url);
         });
 
         $user->sendEmailVerificationNotification();
 
-        return response()->json(["msg" => "Email verification link sent on your email id"]);
+        return response()->json(['msg' => 'Email verification link sent on your email id']);
     }
 }

@@ -33,7 +33,7 @@ class AuthController extends Controller
                     'Avant de commencer, vous devez confirmer votre adresse e-mail en cliquant sur le lien ci-dessous.',
                 ])
                 ->view('emails.verify-email')
-                ->greeting('Bonjour ' . $notifiable->name)
+                ->greeting('Bonjour '.$notifiable->name)
                 ->action('Je confirme mon addresse mail', $url);
         });
 

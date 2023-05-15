@@ -37,7 +37,6 @@
     <p>Nous avons reçu une demande de réinitialisation de votre mot de passe. Veuillez cliquer sur le bouton ci-dessous pour procéder à la réinitialisation.</p>
     <p>
         <a class="button" href="{{ $actionUrl }}">Réinitialiser mon mot de passe</a>
-        lien : {{ $actionUrl }}
     </p>
     <p>Si vous n'avez pas demandé de réinitialisation de mot de passe, aucune action n'est requise.</p>
     <p>Cordialement, {{ config('app.name') }}</p>
