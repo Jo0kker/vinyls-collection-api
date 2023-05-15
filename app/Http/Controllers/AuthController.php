@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Password;
 
 class AuthController extends Controller
@@ -22,6 +24,20 @@ class AuthController extends Controller
         $user = User::create($validatedData);
 
         $accessToken = $user->createToken('authToken')->accessToken;
+
+        VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
+            return (new MailMessage)
+                ->subject('Confirmer votre adresse email')
+                ->lines([
+                    'Merci de vous être inscrit sur notre application !',
+                    'Avant de commencer, vous devez confirmer votre adresse e-mail en cliquant sur le lien ci-dessous.',
+                ])
+                ->view('emails.verify-email')
+                ->greeting('Bonjour ' . $notifiable->name)
+                ->action('Je confirme mon addresse mail', $url);
+        });
+
+        $user->sendEmailVerificationNotification();
 
         return response(['user' => $user, 'access_token' => $accessToken]);
     }

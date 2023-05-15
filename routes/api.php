@@ -11,8 +11,11 @@ use App\Http\Controllers\TradesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UsersSearchesController;
 use App\Http\Controllers\UserTradesController;
+use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\VinylsController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Orion\Facades\Orion;
 
@@ -48,7 +51,11 @@ Orion::hasManyResource('users', 'searches', UsersSearchesController::class);
 
 Route::post('discogs/search', [DiscogsController::class, 'search']);
 
+Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
+
+Route::middleware('auth')->get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
+
 // api check health
 Route::get('/health', function () {
-    return response()->json(['status' => 'ok']);
+    return response()->json(['status' => 'odfk']);
 });
