@@ -41,9 +41,8 @@ class ResetPasswordNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('Wesh comment-va ? voici ton lien pour reset ton password.')
-            ->action('Reset Password', $this->url)
-            ->line('If you did not request a password reset, no further action is required.');
+            ->view('emails.reset-password')
+            ->action('Reset Password', $this->url);
     }
 
     /**
