@@ -7,6 +7,7 @@ use App\Http\Controllers\CollectionVinylController;
 use App\Http\Controllers\CollectionVinylsController;
 use App\Http\Controllers\DiscogsController;
 use App\Http\Controllers\SearchesController;
+use App\Http\Controllers\StatsController;
 use App\Http\Controllers\TradesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UsersSearchesController;
@@ -46,6 +47,8 @@ Orion::hasManyResource('users', 'collections', CollectionUserController::class);
 Orion::hasManyResource('collections', 'collectionVinyl', CollectionVinylController::class);
 Orion::hasManyResource('users', 'trades', UserTradesController::class);
 Orion::hasManyResource('users', 'searches', UsersSearchesController::class);
+
+Route::get('stats/global', [StatsController::class, 'global']);
 
 Route::post('discogs/search', [DiscogsController::class, 'search']);
 
