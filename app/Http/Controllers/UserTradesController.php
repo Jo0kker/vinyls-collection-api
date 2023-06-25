@@ -10,4 +10,9 @@ class UserTradesController extends RelationController
     protected $model = User::class;
 
     protected $relation = 'trades';
+
+    public function includes(): array
+    {
+        return ['vinyl'];
+    }
 }

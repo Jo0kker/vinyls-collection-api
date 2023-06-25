@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WebAuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('login', [WebAuthController::class, 'showLogin'])->name('login');
+Route::post('login', [WebAuthController::class, 'login']);
+Route::get('logout', [WebAuthController::class, 'logout']);
