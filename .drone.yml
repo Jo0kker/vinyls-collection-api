@@ -9,7 +9,7 @@ steps:
   - composer install
 
 - name: test
-  image: php:8.2-cli
+  image: php:8.2
   commands:
   - cp .env.testing .env
   - php artisan key:generate
