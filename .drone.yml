@@ -1,0 +1,30 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+- name: build
+  image: composer:2
+  commands:
+  - composer install
+
+- name: test
+  image: php:8.2-cli
+  commands:
+  - cp .env.testing .env
+  - php artisan key:generate
+  - php artisan migrate --env=testing
+  - php artisan test
+
+services:
+- name: mariadb
+  image: mariadb:10.5
+  environment:
+    MYSQL_DATABASE:
+      from_secret: test_db
+    MYSQL_USER:
+      from_secret: test
+    MYSQL_PASSWORD:
+      from_secret: test
+    MYSQL_ROOT_PASSWORD:
+      from_secret: password
