@@ -12,6 +12,7 @@ steps:
   image: php:8.2
   commands:
   - cp .env.testing .env
+  - docker-php-ext-install mysqli pdo pdo_mysql
   - php artisan key:generate
   - php artisan migrate --env=testing
   - php artisan test
@@ -20,11 +21,7 @@ services:
 - name: mariadb
   image: mariadb:10.5
   environment:
-    MYSQL_DATABASE:
-      from_secret: test_db
-    MYSQL_USER:
-      from_secret: test
-    MYSQL_PASSWORD:
-      from_secret: test
-    MYSQL_ROOT_PASSWORD:
-      from_secret: password
+    MYSQL_ROOT_PASSWORD: secret
+    MYSQL_DATABASE: test_db_vinyls_collection
+    MYSQL_USER: test
+    MYSQL_PASSWORD: test
