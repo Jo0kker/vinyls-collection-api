@@ -38,8 +38,8 @@ class UserPolicy
      *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Trade $trade)
+    public function update(User $user, User $newUser)
     {
-        //
+        return $user->id === $newUser->id;
     }
 }

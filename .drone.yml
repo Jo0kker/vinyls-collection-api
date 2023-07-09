@@ -6,15 +6,15 @@ steps:
 - name: build
   image: composer:2
   commands:
-  - composer install
+  - composer install --dev
 
 - name: test
   image: php:8.2
   commands:
   - cp .env.testing .env
   - docker-php-ext-install mysqli pdo pdo_mysql
-  - php artisan key:generate
-  - php artisan migrate --env=testing
+  - php artisan migrate
+  - php artisan passport:install -q
   - php artisan test
 
 services:
