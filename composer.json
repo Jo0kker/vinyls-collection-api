@@ -23,7 +23,9 @@
         "laravel/pint": "^1.7",
         "laravel/sail": "^1.21",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^6.4.0",
+        "nunomaduro/collision": "^7",
+        "pestphp/pest": "^2.8",
+        "pestphp/pest-plugin-laravel": "^2.0",
         "phpunit/phpunit": "^10.0.19",
         "roave/security-advisories": "dev-latest",
         "spatie/laravel-ignition": "^2.0"
