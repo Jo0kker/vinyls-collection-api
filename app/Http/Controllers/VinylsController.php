@@ -25,8 +25,9 @@ class VinylsController extends Controller
     protected function beforeSave(Request $request, Model $entity)
     {
         if ($request->hasFile('image')) {
-            $entity->image = Storage::putFile('public/images', $request->file('image'));
-            $entity->image = str_replace('public', 'storage', $entity->image);
+            $baseFolder = env('DO_FOLDER');
+            Storage::put($baseFolder, $request->file('image'), ['visibility' => 'public']);
+            $entity->image = Storage::url($baseFolder . '/' . $request->file('image')->hashName());
         }
     }
 }
