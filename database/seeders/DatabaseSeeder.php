@@ -36,7 +36,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SearchSeeder::class);
         $this->call(TradeSeeder::class);
         $this->call(CollectionSeeder::class);
-//        $this->call(VinylSeeder::class);
         $this->call(CollectionVinylSeeder::class);
     }
 }

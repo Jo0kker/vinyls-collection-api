@@ -27,7 +27,7 @@ class VinylsController extends Controller
         if ($request->hasFile('image')) {
             $baseFolder = env('DO_FOLDER');
             Storage::put($baseFolder, $request->file('image'), ['visibility' => 'public']);
-            $entity->image = Storage::url($baseFolder . '/' . $request->file('image')->hashName());
+            $entity->image = Storage::url($baseFolder.'/'.$request->file('image')->hashName());
         }
     }
 }
