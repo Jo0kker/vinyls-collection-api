@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
@@ -54,11 +53,10 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 
     protected function authorization()
     {
-        Auth::shouldUse('web');
         $this->gate();
 
         Telescope::auth(function ($request) {
-            return Gate::check('viewTelescope', [$request->user('web')]);
+            return $request->user('web')->hasPermissionTo('view telescope', 'web');
         });
     }
 

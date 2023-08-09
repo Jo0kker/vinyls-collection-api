@@ -45,7 +45,7 @@ return new class extends Migration
 
         foreach ($tables as $table => $type) {
             foreach (${'permissions'.\Illuminate\Support\Str::studly($type)} as $permission) {
-                Permission::create(['name' => "{$permission} {$table}"]);
+                Permission::create(['name' => "{$permission} {$table}", 'guard_name' => 'api']);
             }
         }
 
