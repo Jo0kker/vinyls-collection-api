@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Trade extends Model
 {
@@ -28,5 +29,15 @@ class Trade extends Model
     public function vinyl(): BelongsTo
     {
         return $this->belongsTo(Vinyl::class);
+    }
+
+    /**
+     * Get the search.
+     *
+     * @return BelongsTo<FormatVinyl>
+     */
+    public function format(): BelongsTo
+    {
+        return $this->belongsTo(FormatVinyl::class, 'format_vinyl_id');
     }
 }

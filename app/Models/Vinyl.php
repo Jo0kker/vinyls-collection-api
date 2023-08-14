@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Vinyl extends Model
 {
@@ -35,12 +37,42 @@ class Vinyl extends Model
     }
 
     /**
-     * Get the format.
+     * Get the trades.
      *
-     * @return BelongsTo<FormatVinyls>
+     * @return HasMany<Trade>
      */
-    public function format(): BelongsTo
+    public function trades(): HasMany
     {
-        return $this->belongsTo(FormatVinyls::class);
+        return $this->hasMany(Trade::class);
+    }
+
+    /**
+     * Get the searches.
+     *
+     * @return HasMany<Search>
+     */
+    public function searches(): HasMany
+    {
+        return $this->hasMany(Search::class);
+    }
+
+    /**
+     * Get the traders.
+     *
+     * @return BelongsToMany<User>
+     */
+    public function traders(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'trades')->withPivot('description', 'format_vinyl_id');
+    }
+
+    /**
+     * Get the searchers.
+     *
+     * @return BelongsToMany<User>
+     */
+    public function searchers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'searches')->withPivot('description', 'format_vinyl_id');
     }
 }

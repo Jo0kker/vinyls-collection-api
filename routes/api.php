@@ -1,22 +1,18 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CollectionsController;
-use App\Http\Controllers\CollectionUserController;
-use App\Http\Controllers\CollectionVinylController;
-use App\Http\Controllers\CollectionVinylsController;
 use App\Http\Controllers\DiscogsController;
-use App\Http\Controllers\SearchesController;
 use App\Http\Controllers\StatsController;
-use App\Http\Controllers\TradesController;
-use App\Http\Controllers\UsersController;
-use App\Http\Controllers\UsersSearchesController;
-use App\Http\Controllers\UserTradesController;
 use App\Http\Controllers\VerificationController;
-use App\Http\Controllers\VinylsController;
+use App\Rest\Controllers\CollectionsController;
+use App\Rest\Controllers\CollectionVinylsController;
+use App\Rest\Controllers\SearchesController;
+use App\Rest\Controllers\TradesController;
+use App\Rest\Controllers\UsersController;
+use App\Rest\Controllers\VinylsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Orion\Facades\Orion;
+use Lomkit\Rest\Facades\Rest;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,16 +33,16 @@ Route::middleware('auth')->get('/users/me', function (Request $request) {
     return $request->user();
 });
 
-Orion::resource('users', UsersController::class);
-Orion::resource('vinyls', VinylsController::class);
-Orion::resource('collections', CollectionsController::class);
-Orion::resource('collectionVinyl', CollectionVinylsController::class);
-Orion::resource('trades', TradesController::class);
-Orion::resource('searches', SearchesController::class);
-Orion::hasManyResource('users', 'collections', CollectionUserController::class);
-Orion::hasManyResource('collections', 'collectionVinyl', CollectionVinylController::class);
-Orion::hasManyResource('users', 'trades', UserTradesController::class);
-Orion::hasManyResource('users', 'searches', UsersSearchesController::class);
+Rest::resource('users', UsersController::class)->withSoftDeletes();
+Rest::resource('vinyls', VinylsController::class);
+Rest::resource('collections', CollectionsController::class);
+Rest::resource('collectionVinyl', CollectionVinylsController::class);
+Rest::resource('trades', TradesController::class);
+Rest::resource('searches', SearchesController::class);
+//HasMany::make('users', CollectionUserController::class);
+//HasMany::make('collections', CollectionVinylController::class);
+//HasMany::make('users', UserTradesController::class);
+//HasMany::make('users', UsersSearchesController::class);
 
 Route::get('stats/global', [StatsController::class, 'global']);
 

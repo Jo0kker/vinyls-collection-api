@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\FormatVinyls;
+use App\Models\FormatVinyl;
 use Illuminate\Database\Seeder;
 
 class FormatVinylsSeeder extends Seeder
@@ -35,7 +35,7 @@ class FormatVinylsSeeder extends Seeder
         ];
 
         foreach ($formats as $format) {
-            FormatVinyls::create([
+            FormatVinyl::create([
                 'name' => $format,
             ]);
         }
