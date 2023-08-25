@@ -56,7 +56,8 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
         $this->gate();
 
         Telescope::auth(function ($request) {
-            return $request->user('web')->hasPermissionTo('view telescope', 'web');
+            return app()->environment('local') ||
+                $request->user('web')->hasPermissionTo('view telescope', 'web');
         });
     }
 

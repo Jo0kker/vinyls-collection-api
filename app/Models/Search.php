@@ -29,4 +29,14 @@ class Search extends Model
     {
         return $this->belongsTo(Vinyl::class);
     }
+
+    /**
+     * Get the search.
+     *
+     * @return BelongsTo<FormatVinyl>
+     */
+    public function format(): BelongsTo
+    {
+        return $this->belongsTo(FormatVinyl::class, 'format_vinyl_id');
+    }
 }
