@@ -18,10 +18,15 @@ class CollectionResource extends RestResource
      */
     public static $model = Collection::class;
 
-    public function exposedFields(RestRequest $request): array
+    public function fields(RestRequest $request): array
     {
         return [
-            'id'
+            'id',
+            'name',
+            'slug',
+            'description',
+            'created_at',
+            'updated_at'
         ];
     }
 
@@ -29,15 +34,11 @@ class CollectionResource extends RestResource
     {
         return [
             HasOne::make('user', UserResource::class),
-            HasMany::make('collection_vinyls', CollectionVinylResource::class)
+            HasMany::make('collectionVinyls', CollectionVinylResource::class)
         ];
     }
 
-    public function exposedScopes(RestRequest $request): array {
-        return [];
-    }
-
-    public function exposedLimits(RestRequest $request): array {
+    public function limits(RestRequest $request): array {
         return [
             1,2,3,4,5,6,7,8,9,
             10,

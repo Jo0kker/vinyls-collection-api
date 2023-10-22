@@ -2,7 +2,7 @@
 
 namespace App\Rest\Resources;
 
-use App\Models\FormatVinyls;
+use App\Models\FormatVinyl;
 use App\Rest\Resource as RestResource;
 use Illuminate\Database\Eloquent\Model;
 use Lomkit\Rest\Concerns\Resource\DisableAutomaticGates;
@@ -17,9 +17,9 @@ class FormatVinylResource extends RestResource
      *
      * @var class-string<Model>
      */
-    public static $model = FormatVinyls::class;
+    public static $model = FormatVinyl::class;
 
-    public function exposedFields(RestRequest $request): array
+    public function fields(RestRequest $request): array
     {
         return [
             'id',
@@ -32,12 +32,12 @@ class FormatVinylResource extends RestResource
         return [];
     }
 
-    public function exposedScopes(RestRequest $request): array
+    public function scopes(RestRequest $request): array
     {
         return [];
     }
 
-    public function exposedLimits(RestRequest $request): array
+    public function limits(RestRequest $request): array
     {
         return [
             1, 2, 3, 4, 5, 6, 7, 8, 9,

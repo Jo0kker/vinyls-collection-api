@@ -16,7 +16,7 @@ class UserResource extends RestResource
      */
     public static $model = User::class;
 
-    public function exposedFields(RestRequest $request): array
+    public function fields(RestRequest $request): array
     {
         return [
             'id',
@@ -41,11 +41,11 @@ class UserResource extends RestResource
         ];
     }
 
-    public function exposedScopes(RestRequest $request): array {
+    public function scopes(RestRequest $request): array {
         return [];
     }
 
-    public function exposedLimits(RestRequest $request): array {
+    public function limits(RestRequest $request): array {
         return [
             1,2,3,4,5,6,7,8,9,
             10,
