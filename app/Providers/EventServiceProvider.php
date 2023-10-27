@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Collection;
+use App\Models\Search;
 use App\Observers\CollectionObserver;
+use App\Observers\SearchObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -24,6 +26,9 @@ class EventServiceProvider extends ServiceProvider
     protected $observers = [
         Collection::class => [
             CollectionObserver::class,
+        ],
+        Search::class => [
+            SearchObserver::class,
         ],
     ];
 

@@ -20,7 +20,8 @@ class SearchResource extends RestResource
     public function fields(RestRequest $request): array
     {
         return [
-            'id'
+            'id',
+            'description'
         ];
     }
 
