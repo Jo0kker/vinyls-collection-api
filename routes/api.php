@@ -39,10 +39,6 @@ Rest::resource('collections', CollectionsController::class);
 Rest::resource('collectionVinyl', CollectionVinylsController::class);
 Rest::resource('trades', TradesController::class);
 Rest::resource('searches', SearchesController::class);
-//HasMany::make('users', CollectionUserController::class);
-//HasMany::make('collections', CollectionVinylController::class);
-//HasMany::make('users', UserTradesController::class);
-//HasMany::make('users', UsersSearchesController::class);
 
 Route::get('stats/global', [StatsController::class, 'global']);
 
