@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\FormatVinyl;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FormatVinyls>
+ * @extends Factory<FormatVinyl>
  */
 class FormatVinylsFactory extends Factory
 {

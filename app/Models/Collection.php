@@ -17,7 +17,7 @@ class Collection extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\CollectionVinyl>
+     * @return HasMany<CollectionVinyl>
      */
     public function collectionVinyls(): HasMany
     {
@@ -33,4 +33,5 @@ class Collection extends Model
     {
         return $this->belongsTo(User::class);
     }
+
 }

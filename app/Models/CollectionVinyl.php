@@ -35,4 +35,12 @@ class CollectionVinyl extends Model
     {
         return $this->belongsTo(Vinyl::class);
     }
+
+    /**
+     * GET format vinyl
+     */
+    public function format(): BelongsTo
+    {
+        return $this->belongsTo(FormatVinyl::class, 'format_vinyl_id');
+    }
 }
