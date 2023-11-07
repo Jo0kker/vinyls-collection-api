@@ -6,6 +6,7 @@ use App\Http\Controllers\StatsController;
 use App\Http\Controllers\VerificationController;
 use App\Rest\Controllers\CollectionsController;
 use App\Rest\Controllers\CollectionVinylsController;
+use App\Rest\Controllers\FormatVinylsController;
 use App\Rest\Controllers\SearchesController;
 use App\Rest\Controllers\TradesController;
 use App\Rest\Controllers\UsersController;
@@ -39,6 +40,7 @@ Rest::resource('collections', CollectionsController::class);
 Rest::resource('collectionVinyl', CollectionVinylsController::class);
 Rest::resource('trades', TradesController::class);
 Rest::resource('searches', SearchesController::class);
+Rest::resource('formats', FormatVinylsController::class);
 
 Route::get('stats/global', [StatsController::class, 'global']);
 
