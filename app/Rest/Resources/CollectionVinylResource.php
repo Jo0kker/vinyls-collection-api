@@ -22,6 +22,9 @@ class CollectionVinylResource extends RestResource
     {
         return [
             'id',
+            'collection_id',
+            'vinyl_id',
+            'format_vinyl_id',
         ];
     }
 

@@ -33,7 +33,7 @@ class CollectionVinyl extends Model
      */
     public function vinyl(): BelongsTo
     {
-        return $this->belongsTo(Vinyl::class);
+        return $this->belongsTo(Vinyl::class, 'id');
     }
 
     /**

@@ -5,13 +5,10 @@ namespace App\Rest\Resources;
 use App\Models\FormatVinyl;
 use App\Rest\Resource as RestResource;
 use Illuminate\Database\Eloquent\Model;
-use Lomkit\Rest\Concerns\Resource\DisableAutomaticGates;
 use Lomkit\Rest\Http\Requests\RestRequest;
 
 class FormatVinylResource extends RestResource
 {
-    use DisableAutomaticGates;
-
     /**
      * The model the resource corresponds to.
      *
