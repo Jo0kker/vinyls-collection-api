@@ -4,6 +4,8 @@ namespace App\Rest\Resources;
 
 use App\Models\Trade;
 use App\Rest\Resource as RestResource;
+use App\Rules\UniqueVinyl;
+use App\Rules\UniqueVinylInCollection;
 use Illuminate\Database\Eloquent\Model;
 use Lomkit\Rest\Http\Requests\RestRequest;
 use Lomkit\Rest\Relations\BelongsTo;
@@ -21,6 +23,18 @@ class TradeResource extends RestResource
     {
         return [
             'id'
+        ];
+    }
+
+    public function rules(RestRequest $request): array
+    {
+        $attributes = (array)$request->input('mutate')[0]['attributes'];
+        return [
+            'vinyl_id' => [
+                'required',
+                'exists:vinyls,id',
+                new UniqueVinyl($attributes, 'trades')
+            ],
         ];
     }
 

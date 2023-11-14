@@ -39,7 +39,7 @@ class TradePolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -49,7 +49,7 @@ class TradePolicy
      */
     public function update(User $user, Trade $trade)
     {
-        //
+        return $user->id === $trade->user_id;
     }
 
     /**
@@ -59,7 +59,7 @@ class TradePolicy
      */
     public function delete(User $user, Trade $trade)
     {
-        //
+        return $user->id === $trade->user_id;
     }
 
     /**
@@ -69,7 +69,7 @@ class TradePolicy
      */
     public function restore(User $user, Trade $trade)
     {
-        //
+        return $user->id === $trade->user_id;
     }
 
     /**
@@ -79,6 +79,6 @@ class TradePolicy
      */
     public function forceDelete(User $user, Trade $trade)
     {
-        //
+        return $user->id === $trade->user_id;
     }
 }

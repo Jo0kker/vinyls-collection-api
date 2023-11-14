@@ -49,7 +49,7 @@ class SearchPolicy
      */
     public function update(User $user, Search $search)
     {
-        //
+        return $user->id === $search->user_id;
     }
 
     /**
@@ -59,7 +59,7 @@ class SearchPolicy
      */
     public function delete(User $user, Search $search)
     {
-        //
+        return $user->id === $search->user_id;
     }
 
     /**
@@ -69,7 +69,7 @@ class SearchPolicy
      */
     public function restore(User $user, Search $search)
     {
-        //
+        return $user->id === $search->user_id;
     }
 
     /**
@@ -79,6 +79,6 @@ class SearchPolicy
      */
     public function forceDelete(User $user, Search $search)
     {
-        //
+        return $user->id === $search->user_id;
     }
 }

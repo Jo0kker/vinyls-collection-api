@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class CollectionVinyl extends Model
 {
@@ -29,11 +30,11 @@ class CollectionVinyl extends Model
     }
 
     /**
-     * @return BelongsTo<Vinyl>
+     * @return HasOne<Vinyl>
      */
-    public function vinyl(): BelongsTo
+    public function vinyl(): HasOne
     {
-        return $this->belongsTo(Vinyl::class, 'id');
+        return $this->hasOne(Vinyl::class, 'id');
     }
 
     /**

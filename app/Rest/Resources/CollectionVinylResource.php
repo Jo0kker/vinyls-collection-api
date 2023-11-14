@@ -4,7 +4,9 @@ namespace App\Rest\Resources;
 
 use App\Models\CollectionVinyl;
 use App\Rest\Resource as RestResource;
+use App\Rules\UniqueVinylInCollection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\Rule;
 use Lomkit\Rest\Http\Requests\RestRequest;
 use Lomkit\Rest\Relations\BelongsTo;
 use Lomkit\Rest\Relations\HasOne;
@@ -34,6 +36,17 @@ class CollectionVinylResource extends RestResource
             HasOne::make('vinyl', VinylResource::class),
             HasOne::make('collection', CollectionResource::class),
             HasOne::make('format', FormatVinylResource::class)
+        ];
+    }
+
+    public function rules(RestRequest $request): array
+    {
+        $attributes = (array)$request->input('mutate')[0]['attributes'];
+        return [
+            'vinyl_id' => ['required',
+                'exists:vinyls,id',
+                new UniqueVinylInCollection($attributes)
+            ],
         ];
     }
 

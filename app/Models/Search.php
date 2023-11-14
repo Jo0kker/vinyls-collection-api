@@ -10,6 +10,13 @@ class Search extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'description',
+        'vinyl_id',
+        'format_vinyl_id',
+        'user_id'
+    ];
+
     /**
      * Get the user.
      *
