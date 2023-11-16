@@ -22,7 +22,10 @@ class TradeResource extends RestResource
     public function fields(RestRequest $request): array
     {
         return [
-            'id'
+            'id',
+            'description',
+            'vinyl_id',
+            'format_vinyl_id',
         ];
     }
 

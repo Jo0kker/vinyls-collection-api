@@ -24,7 +24,6 @@ class UniqueVinylInCollection implements ValidationRule
             ->where('vinyl_id', $value)
             ->where('format_vinyl_id', $this->attributes['format_vinyl_id'])
             ->exists();
-
         if ($exists) {
             $fail('The vinyl already exists in this collection.');
         }
