@@ -26,7 +26,8 @@ class CollectionVinylResource extends RestResource
             'id',
             'collection_id',
             'vinyl_id',
-            'format_vinyl_id',
+            'format',
+            'discog_id'
         ];
     }
 
@@ -35,7 +36,6 @@ class CollectionVinylResource extends RestResource
         return [
             HasOne::make('vinyl', VinylResource::class),
             HasOne::make('collection', CollectionResource::class),
-            HasOne::make('format', FormatVinylResource::class)
         ];
     }
 
@@ -43,7 +43,7 @@ class CollectionVinylResource extends RestResource
     {
         $attributes = (array)$request->input('mutate')[0]['attributes'];
         return [
-            'vinyl_id' => ['required',
+            'vinyl_id' => [
                 'exists:vinyls,id',
                 new UniqueVinylInCollection($attributes)
             ],

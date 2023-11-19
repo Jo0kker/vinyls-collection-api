@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Models\Collection;
+use App\Models\CollectionVinyl;
 use App\Models\Search;
 use App\Models\Trade;
 use App\Observers\CollectionObserver;
+use App\Observers\CollectionVinylObserver;
 use App\Observers\SearchObserver;
 use App\Observers\TradeObserver;
 use Illuminate\Auth\Events\Registered;
@@ -34,6 +36,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         Trade::class => [
             TradeObserver::class,
+        ],
+        CollectionVinyl::class => [
+            CollectionVinylObserver::class,
         ],
     ];
 

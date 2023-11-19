@@ -22,6 +22,7 @@ class Vinyl extends Model
         'provenance',
         'discog_id',
         'discog_url',
+        'discog_img',
         'discog_videos',
         'collection_id',
     ];

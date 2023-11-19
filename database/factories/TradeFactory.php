@@ -25,7 +25,7 @@ class TradeFactory extends Factory
             'description' => fake()->text,
             'vinyl_id' => Vinyl::factory()->create()->getKey(),
             'user_id' => User::inRandomOrder()->first()->getKey(),
-            'format_vinyl_id' => FormatVinyl::inRandomOrder()->first()->getKey(),
+            'format' => fake()->text(5),
             'created_at' => Carbon::now()->subDays(random_int(1, 365)),
         ];
     }

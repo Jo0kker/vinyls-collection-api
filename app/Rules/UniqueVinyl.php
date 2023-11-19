@@ -5,6 +5,7 @@ namespace App\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Translation\PotentiallyTranslatedString;
 
 class UniqueVinyl implements ValidationRule
 {
@@ -17,7 +18,7 @@ class UniqueVinyl implements ValidationRule
     /**
      * Run the validation rule.
      *
-     * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * @param Closure(string): PotentiallyTranslatedString $fail
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
@@ -25,7 +26,7 @@ class UniqueVinyl implements ValidationRule
         $exists = DB::table($this->table)
             ->where('user_id', $userId)
             ->where('vinyl_id', $value)
-            ->where('format_vinyl_id', $this->attributes['format_vinyl_id'])
+            ->where('format', $this->attributes['format'])
             ->exists();
 
         if ($exists) {

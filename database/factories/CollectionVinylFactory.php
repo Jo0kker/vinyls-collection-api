@@ -26,7 +26,7 @@ class CollectionVinylFactory extends Factory
     {
         return [
             'collection_id' => Collection::inRandomOrder()->first()->getKey(),
-            'format_vinyl_id' => FormatVinyl::inRandomOrder()->first()->getKey(),
+            'format' => fake()->text(5),
             'vinyl_id' => Vinyl::factory()->create()->getKey(),
             'created_at' => Carbon::now()->subDays(random_int(1, 365)),
         ];

@@ -13,7 +13,7 @@ class Search extends Model
     protected $fillable = [
         'description',
         'vinyl_id',
-        'format_vinyl_id',
+        'format',
         'user_id'
     ];
 
@@ -35,15 +35,5 @@ class Search extends Model
     public function vinyl(): BelongsTo
     {
         return $this->belongsTo(Vinyl::class);
-    }
-
-    /**
-     * Get the search.
-     *
-     * @return BelongsTo<FormatVinyl>
-     */
-    public function format(): BelongsTo
-    {
-        return $this->belongsTo(FormatVinyl::class, 'format_vinyl_id');
     }
 }

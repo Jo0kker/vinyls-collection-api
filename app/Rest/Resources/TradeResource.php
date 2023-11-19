@@ -25,7 +25,7 @@ class TradeResource extends RestResource
             'id',
             'description',
             'vinyl_id',
-            'format_vinyl_id',
+            'format',
         ];
     }
 
@@ -45,7 +45,6 @@ class TradeResource extends RestResource
     {
         return [
             BelongsTo::make('vinyl', VinylResource::class),
-            BelongsTo::make('format', FormatVinylResource::class),
             BelongsTo::make('user', UserResource::class),
         ];
     }

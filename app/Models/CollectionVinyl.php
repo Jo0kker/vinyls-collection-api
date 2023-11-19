@@ -14,7 +14,7 @@ class CollectionVinyl extends Model
     protected $fillable = [
         'collection_id',
         'vinyl_id',
-        'format_vinyl_id',
+        'format',
         'cover_state',
         'year_purchased',
         'price',
@@ -35,13 +35,5 @@ class CollectionVinyl extends Model
     public function vinyl(): HasOne
     {
         return $this->hasOne(Vinyl::class, 'id');
-    }
-
-    /**
-     * GET format vinyl
-     */
-    public function format(): BelongsTo
-    {
-        return $this->belongsTo(FormatVinyl::class, 'format_vinyl_id');
     }
 }

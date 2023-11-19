@@ -11,6 +11,7 @@ use App\Rest\Controllers\SearchesController;
 use App\Rest\Controllers\TradesController;
 use App\Rest\Controllers\UsersController;
 use App\Rest\Controllers\VinylsController;
+use App\Http\Controllers\VinylsController as ControllersVinylsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Lomkit\Rest\Facades\Rest;
@@ -33,6 +34,9 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('
 Route::middleware('auth')->get('/users/me', function (Request $request) {
     return $request->user();
 });
+
+// add route to add discog vinyl
+Route::middleware('auth')->post('/vinyls/discogs', [ControllersVinylsController::class, 'addDiscogs']);
 
 Rest::resource('users', UsersController::class)->withSoftDeletes();
 Rest::resource('vinyls', VinylsController::class);
