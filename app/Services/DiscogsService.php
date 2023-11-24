@@ -39,7 +39,7 @@ use JsonException;
      */
     public function getVinylDataById($id): object
     {
-        $response = $this->client->request('GET', 'releases/'.$id, [
+        $response = $this->client->request('GET', 'masters/'.$id, [
             'query' => [
                 'token' => env('DISCOGS_TOKEN'),
             ],

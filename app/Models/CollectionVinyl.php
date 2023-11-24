@@ -34,6 +34,6 @@ class CollectionVinyl extends Model
      */
     public function vinyl(): HasOne
     {
-        return $this->hasOne(Vinyl::class, 'id');
+        return $this->hasOne(Vinyl::class, 'id', 'vinyl_id');
     }
 }

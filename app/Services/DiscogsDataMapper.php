@@ -14,13 +14,13 @@ class DiscogsDataMapper
 
     // discogs_field => vinyl_field
     private $mappingField = [
-        'id' => 'discogs_id',
+        'id' => 'discog_id',
         'title' => 'title',
-        'artists' => 'artists',
+        'artists' => 'artist',
         'genres' => 'genre',
         'images' => 'discog_img',
         'tracklist' => 'track_list',
-        'released' => 'released',
+        'year' => 'released',
         'country' => 'provenance',
         'videos' => 'discog_videos',
         'uri' => 'discog_url',
@@ -30,6 +30,9 @@ class DiscogsDataMapper
     {
         $vinyl = [];
         foreach ($this->mappingField as $discogsField => $vinylField) {
+            if (!isset($discogsData->$discogsField)) {
+                continue;
+            }
             switch ($vinylField) {
                 case 'genre':
                     // loop on genres and concat them
@@ -63,6 +66,14 @@ class DiscogsDataMapper
                         $videos[] = $video;
                     }
                     $vinyl[$vinylField] = json_encode($videos);
+                    break;
+                case 'artist':
+                    // loop on artists and concat them
+                    $artists = [];
+                    foreach ($discogsData->$discogsField as $artist) {
+                        $artists[] = $artist->name;
+                    }
+                    $vinyl[$vinylField] = implode(', ', $artists);
                     break;
                 default:
                     $vinyl[$vinylField] = $discogsData->$discogsField;

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('vinyls', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('artist')->nullable();
+            $table->longText('artist')->nullable();
             $table->string('genre')->nullable();
             $table->string('image')->nullable();
             $table->json('track_list')->nullable();

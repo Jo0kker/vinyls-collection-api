@@ -39,7 +39,7 @@ class VinylPolicy
      */
     public function create(User $user)
     {
-        return true;
+        return $user->email_verified_at !== null;
     }
 
     /**
