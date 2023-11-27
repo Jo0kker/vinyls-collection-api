@@ -15,7 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, softDeletes;
+    use HasApiTokens, HasFactory, HasRoles, Notifiable, softDeletes;
 
     /**
      * The attributes that are mass assignable.

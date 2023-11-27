@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Collection;
 use App\Models\CollectionVinyl;
-use App\Models\FormatVinyl;
 use App\Models\Vinyl;
 use Carbon\Carbon;
 use Exception;
@@ -26,7 +25,7 @@ class CollectionVinylFactory extends Factory
     {
         return [
             'collection_id' => Collection::inRandomOrder()->first()->getKey(),
-            'format_vinyl_id' => FormatVinyl::inRandomOrder()->first()->getKey(),
+            'format' => fake()->text(5),
             'vinyl_id' => Vinyl::factory()->create()->getKey(),
             'created_at' => Carbon::now()->subDays(random_int(1, 365)),
         ];

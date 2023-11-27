@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class CollectionVinyl extends Model
 {
@@ -13,7 +14,7 @@ class CollectionVinyl extends Model
     protected $fillable = [
         'collection_id',
         'vinyl_id',
-        'format_vinyl_id',
+        'format',
         'cover_state',
         'year_purchased',
         'price',
@@ -29,18 +30,10 @@ class CollectionVinyl extends Model
     }
 
     /**
-     * @return BelongsTo<Vinyl>
+     * @return HasOne<Vinyl>
      */
-    public function vinyl(): BelongsTo
+    public function vinyl(): HasOne
     {
-        return $this->belongsTo(Vinyl::class);
-    }
-
-    /**
-     * GET format vinyl
-     */
-    public function format(): BelongsTo
-    {
-        return $this->belongsTo(FormatVinyl::class, 'format_vinyl_id');
+        return $this->hasOne(Vinyl::class, 'id', 'vinyl_id');
     }
 }

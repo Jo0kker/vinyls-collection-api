@@ -3,24 +3,25 @@
 namespace App\Observers;
 
 use App\Models\Search;
+use App\Models\Trade;
 use Illuminate\Support\Facades\Auth;
 
-class SearchObserver
+class TradeObserver
 {
     /**
      * Handle the Search "created" event.
      */
-    public function creating(Search $search): void
+    public function creating(Trade $trade): void
     {
-        if (! $search->user_id) {
-            $search->user()->associate(Auth::user());
+        if (! $trade->user_id) {
+            $trade->user()->associate(Auth::user());
         }
     }
 
     /**
      * Handle the Search "updated" event.
      */
-    public function updated(Search $search): void
+    public function updated(Trade $trade): void
     {
         //
     }
@@ -28,7 +29,7 @@ class SearchObserver
     /**
      * Handle the Search "deleted" event.
      */
-    public function deleted(Search $search): void
+    public function deleted(Trade $trade): void
     {
         //
     }
@@ -36,7 +37,7 @@ class SearchObserver
     /**
      * Handle the Search "restored" event.
      */
-    public function restored(Search $search): void
+    public function restored(Trade $trade): void
     {
         //
     }
@@ -44,7 +45,7 @@ class SearchObserver
     /**
      * Handle the Search "force deleted" event.
      */
-    public function forceDeleted(Search $search): void
+    public function forceDeleted(Trade $trade): void
     {
         //
     }

@@ -4,8 +4,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DiscogsController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\VerificationController;
+use App\Http\Controllers\VinylsController as ControllersVinylsController;
 use App\Rest\Controllers\CollectionsController;
 use App\Rest\Controllers\CollectionVinylsController;
+use App\Rest\Controllers\FormatVinylsController;
 use App\Rest\Controllers\SearchesController;
 use App\Rest\Controllers\TradesController;
 use App\Rest\Controllers\UsersController;
@@ -29,9 +31,16 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
 
+Route::group(['middleware' => ['auth']], function () {
+    Route::post('/vinyls', [ControllersVinylsController::class, 'store']);
+});
+
 Route::middleware('auth')->get('/users/me', function (Request $request) {
     return $request->user();
 });
+
+// add route to add discog vinyl
+Route::middleware('auth')->post('/vinyls/discogs', [ControllersVinylsController::class, 'addDiscogs']);
 
 Rest::resource('users', UsersController::class)->withSoftDeletes();
 Rest::resource('vinyls', VinylsController::class);
@@ -39,6 +48,7 @@ Rest::resource('collections', CollectionsController::class);
 Rest::resource('collectionVinyl', CollectionVinylsController::class);
 Rest::resource('trades', TradesController::class);
 Rest::resource('searches', SearchesController::class);
+Rest::resource('formats', FormatVinylsController::class);
 
 Route::get('stats/global', [StatsController::class, 'global']);
 

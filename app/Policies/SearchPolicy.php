@@ -13,7 +13,6 @@ class SearchPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewAny(?User $user)
@@ -24,7 +23,6 @@ class SearchPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function view(?User $user, Search $search)
@@ -49,7 +47,7 @@ class SearchPolicy
      */
     public function update(User $user, Search $search)
     {
-        //
+        return $user->id === $search->user_id;
     }
 
     /**
@@ -59,7 +57,7 @@ class SearchPolicy
      */
     public function delete(User $user, Search $search)
     {
-        //
+        return $user->id === $search->user_id;
     }
 
     /**
@@ -69,7 +67,7 @@ class SearchPolicy
      */
     public function restore(User $user, Search $search)
     {
-        //
+        return $user->id === $search->user_id;
     }
 
     /**
@@ -79,6 +77,6 @@ class SearchPolicy
      */
     public function forceDelete(User $user, Search $search)
     {
-        //
+        return $user->id === $search->user_id;
     }
 }

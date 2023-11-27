@@ -13,7 +13,6 @@ class TradePolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewAny(?User $user)
@@ -24,7 +23,6 @@ class TradePolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function view(?User $user, Trade $trade)
@@ -39,7 +37,7 @@ class TradePolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -49,7 +47,7 @@ class TradePolicy
      */
     public function update(User $user, Trade $trade)
     {
-        //
+        return $user->id === $trade->user_id;
     }
 
     /**
@@ -59,7 +57,7 @@ class TradePolicy
      */
     public function delete(User $user, Trade $trade)
     {
-        //
+        return $user->id === $trade->user_id;
     }
 
     /**
@@ -69,7 +67,7 @@ class TradePolicy
      */
     public function restore(User $user, Trade $trade)
     {
-        //
+        return $user->id === $trade->user_id;
     }
 
     /**
@@ -79,6 +77,6 @@ class TradePolicy
      */
     public function forceDelete(User $user, Trade $trade)
     {
-        //
+        return $user->id === $trade->user_id;
     }
 }

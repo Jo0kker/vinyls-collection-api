@@ -3,15 +3,15 @@
 namespace App\Rest\Controllers;
 
 use App\Rest\Controller as RestController;
-use App\Rest\Resources\VinylResource;
+use App\Rest\Resources\FormatVinylResource;
 use Lomkit\Rest\Http\Resource;
 
-class VinylsController extends RestController
+class FormatVinylsController extends RestController
 {
     /**
      * The resource the controller corresponds to.
      *
      * @var class-string<resource>
      */
-    public static $resource = VinylResource::class;
+    public static $resource = FormatVinylResource::class;
 }

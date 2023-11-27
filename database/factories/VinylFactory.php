@@ -2,14 +2,16 @@
 
 namespace Database\Factories;
 
+use App\Models\Vinyl;
 use App\Services\DiscogsService;
 use Carbon\Carbon;
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Vinyl>
+ * @extends Factory<Vinyl>
  */
 class VinylFactory extends Factory
 {
@@ -26,12 +28,12 @@ class VinylFactory extends Factory
 
         try {
             $discogsData = $discogsService->getVinylDataById($discogsId);
-        } catch (\Exception|GuzzleException $e) {
+        } catch (Exception|GuzzleException $e) {
             return [
                 'title' => fake()->name,
                 'artist' => fake()->name,
                 'genre' => fake()->name,
-                'released' => Carbon::now(),
+                'released' => Carbon::now()->format('Y'),
                 'image' => 'https://picsum.photos/300?random='.random_int(1, 1000),
                 'provenance' => fake()->name,
             ];
@@ -59,7 +61,7 @@ class VinylFactory extends Factory
             }
 
             if (isset($discogsData->released) && $discogsData->released !== '') {
-                $released = Carbon::parse($discogsData->released);
+                $released = $discogsData->released;
             } else {
                 $released = null;
             }
@@ -82,7 +84,7 @@ class VinylFactory extends Factory
             'title' => fake()->name,
             'artist' => fake()->name,
             'genre' => fake()->name,
-            'released' => Carbon::now(),
+            'released' => Carbon::now()->format('Y'),
             'image' => 'https://picsum.photos/300?random='.random_int(1, 1000),
             'provenance' => fake()->name,
         ];

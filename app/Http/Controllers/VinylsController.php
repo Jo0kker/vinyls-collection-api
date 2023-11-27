@@ -2,32 +2,74 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VinylRequest;
 use App\Models\Vinyl;
-use Illuminate\Database\Eloquent\Model;
+use App\Services\DiscogsDataMapper;
+use App\Services\DiscogsService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Orion\Http\Controllers\Controller;
-use Orion\Http\Requests\Request;
+use Illuminate\Support\Facades\Validator;
 
 class VinylsController extends Controller
 {
-    protected $model = Vinyl::class;
-
-    public function includes(): array
-    {
-        return ['user'];
+    public function __construct(
+        private readonly DiscogsService $discogsService,
+        private readonly DiscogsDataMapper $discogsDataMapper
+    ) {
     }
 
-    public function sortableBy(): array
+    public function addDiscogs(Request $request)
     {
-        return ['created_at', 'updated_at'];
-    }
+        $this->authorize('create', Vinyl::class);
+        $rules = [
+            'discog_id' => 'required|integer|unique:vinyls,discog_id',
+        ];
 
-    protected function beforeSave(Request $request, Model $entity)
-    {
-        if ($request->hasFile('image')) {
-            $baseFolder = env('DO_FOLDER');
-            Storage::put($baseFolder, $request->file('image'), ['visibility' => 'public']);
-            $entity->image = Storage::url($baseFolder.'/'.$request->file('image')->hashName());
+        $messages = [
+            'discog_id.unique' => 'Le vinyle est déjà présent dans la base de données.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
         }
+
+        $discog_id = $request->input('discog_id');
+        $discog = $this->discogsService->getVinylDataById($discog_id);
+        $vinyl = $this->discogsDataMapper->mapData($discog);
+        // save image to storage
+        $image = $vinyl['image'];
+        $image = str_replace('http://', 'https://', $image);
+        $image = file_get_contents($image);
+        // get folder in config env
+
+        $storageSystem = config('filesystems.default');
+
+        if ($storageSystem === 'do') {
+            $imageFolder = config('filesystems.disks.do.folder');
+        } else {
+            $imageFolder = 'public';
+        }
+        $imageName = $imageFolder.'/'.$vinyl['discog_id'].'.jpeg';
+
+        Storage::put(
+            $imageName,
+            $image, [
+                'visibility' => 'public',
+            ]);
+        $path = Storage::url($imageName);
+        $vinyl['image'] = $path;
+
+        $vinyl = Vinyl::create($vinyl);
+
+        return response()->json($vinyl);
+    }
+
+    public function store(VinylRequest $request)
+    {
+        $this->authorize('create', Vinyl::class);
+        $vinyl = Vinyl::create($request->validated());
+
+        return response()->json($vinyl);
     }
 }
