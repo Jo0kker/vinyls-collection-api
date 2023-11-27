@@ -2,14 +2,12 @@
 
 namespace App\Rest\Resources;
 
-use App\Models\User;
 use App\Models\Vinyl;
 use App\Rest\Resource;
 use Illuminate\Database\Eloquent\Model;
 use Lomkit\Rest\Http\Requests\RestRequest;
 use Lomkit\Rest\Relations\BelongsToMany;
 use Lomkit\Rest\Relations\HasMany;
-use Lomkit\Rest\Relations\HasManyThrough;
 
 class VinylResource extends Resource
 {
@@ -35,7 +33,7 @@ class VinylResource extends Resource
             'discog_url',
             'discog_videos',
             'created_at',
-            'updated_at'
+            'updated_at',
         ];
     }
 
@@ -52,10 +50,10 @@ class VinylResource extends Resource
     public function limits(RestRequest $request): array
     {
         return [
-            1,2,3,4,5,6,7,8,9,
+            1, 2, 3, 4, 5, 6, 7, 8, 9,
             10,
             25,
-            50
+            50,
         ];
     }
 }

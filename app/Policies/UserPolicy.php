@@ -14,7 +14,6 @@ class UserPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param User $user
      * @return Response|bool
      */
     public function viewAny(?User $user)
@@ -25,7 +24,6 @@ class UserPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param User $user
      * @param  Trade  $trade
      * @return Response|bool
      */

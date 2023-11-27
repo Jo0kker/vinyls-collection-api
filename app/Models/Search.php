@@ -14,7 +14,7 @@ class Search extends Model
         'description',
         'vinyl_id',
         'format',
-        'user_id'
+        'user_id',
     ];
 
     /**

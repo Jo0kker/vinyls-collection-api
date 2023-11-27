@@ -52,7 +52,7 @@ use JsonException;
     {
         $response = $this->client->request(
             method: 'GET',
-            uri:  'database/search',
+            uri: 'database/search',
             options: [
                 'query' => [
                     'title' => $title,
@@ -62,8 +62,8 @@ use JsonException;
                     'per_page' => $perPage,
                     'type' => 'master',
                     'token' => env('DISCOGS_TOKEN'),
-            ],
-        ]);
+                ],
+            ]);
 
         $vinyls = json_decode($response->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
         $vinyls->results = array_map([$this, 'changeVinylsKeyName'], $vinyls->results);
@@ -74,11 +74,11 @@ use JsonException;
     private function changeVinylsKeyName($vinyl): object
     {
         $nameToConvert = [
-            "country" => "provenance",
-            "id" => "discog_id",
-            "cover_image" => "image",
-            "uri" => "discog_url",
-            "format" => "formats",
+            'country' => 'provenance',
+            'id' => 'discog_id',
+            'cover_image' => 'image',
+            'uri' => 'discog_url',
+            'format' => 'formats',
         ];
 
         foreach ($nameToConvert as $key => $value) {
@@ -88,7 +88,7 @@ use JsonException;
                     $vinyl->$value = $vinyl->$key;
                     break;
                 case 'uri':
-                    $vinyl->$value = "https://www.discogs.com".$vinyl->$key;
+                    $vinyl->$value = 'https://www.discogs.com'.$vinyl->$key;
                     unset($vinyl->$key);
                     break;
                 default:

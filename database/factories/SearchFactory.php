@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\FormatVinyl;
 use App\Models\Search;
 use App\Models\User;
 use App\Models\Vinyl;

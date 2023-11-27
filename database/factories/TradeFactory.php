@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\FormatVinyl;
 use App\Models\Trade;
 use App\Models\User;
 use App\Models\Vinyl;

@@ -11,7 +11,6 @@ class DiscogsDataMapper
     //discog_url
     //discog_videos
 
-
     // discogs_field => vinyl_field
     private $mappingField = [
         'id' => 'discog_id',
@@ -30,7 +29,7 @@ class DiscogsDataMapper
     {
         $vinyl = [];
         foreach ($this->mappingField as $discogsField => $vinylField) {
-            if (!isset($discogsData->$discogsField)) {
+            if (! isset($discogsData->$discogsField)) {
                 continue;
             }
             switch ($vinylField) {
@@ -80,6 +79,7 @@ class DiscogsDataMapper
                     break;
             }
         }
+
         return $vinyl;
     }
 }

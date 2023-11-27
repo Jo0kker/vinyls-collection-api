@@ -6,9 +6,7 @@ use App\Models\CollectionVinyl;
 use App\Rest\Resource as RestResource;
 use App\Rules\UniqueVinylInCollection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\Rule;
 use Lomkit\Rest\Http\Requests\RestRequest;
-use Lomkit\Rest\Relations\BelongsTo;
 use Lomkit\Rest\Relations\HasOne;
 
 class CollectionVinylResource extends RestResource
@@ -27,7 +25,7 @@ class CollectionVinylResource extends RestResource
             'collection_id',
             'vinyl_id',
             'format',
-            'discog_id'
+            'discog_id',
         ];
     }
 
@@ -41,11 +39,12 @@ class CollectionVinylResource extends RestResource
 
     public function rules(RestRequest $request): array
     {
-        $attributes = (array)$request->input('mutate')[0]['attributes'];
+        $attributes = (array) $request->input('mutate')[0]['attributes'];
+
         return [
             'vinyl_id' => [
                 'exists:vinyls,id',
-                new UniqueVinylInCollection($attributes)
+                new UniqueVinylInCollection($attributes),
             ],
         ];
     }
@@ -53,10 +52,10 @@ class CollectionVinylResource extends RestResource
     public function limits(RestRequest $request): array
     {
         return [
-            1,2,3,4,5,6,7,8,9,
+            1, 2, 3, 4, 5, 6, 7, 8, 9,
             10,
             25,
-            50
+            50,
         ];
     }
 }

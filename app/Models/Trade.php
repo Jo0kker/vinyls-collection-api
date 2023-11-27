@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Trade extends Model
 {
@@ -15,7 +14,7 @@ class Trade extends Model
         'description',
         'vinyl_id',
         'format',
-        'user_id'
+        'user_id',
     ];
 
     /**

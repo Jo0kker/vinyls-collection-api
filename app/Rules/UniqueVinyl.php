@@ -12,13 +12,13 @@ class UniqueVinyl implements ValidationRule
     public function __construct(
         private readonly array $attributes,
         private readonly string $table
-    )
-    {}
+    ) {
+    }
 
     /**
      * Run the validation rule.
      *
-     * @param Closure(string): PotentiallyTranslatedString $fail
+     * @param  Closure(string): PotentiallyTranslatedString  $fail
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {

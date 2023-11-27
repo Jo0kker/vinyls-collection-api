@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Collection;
 use App\Models\CollectionVinyl;
-use App\Models\FormatVinyl;
 use App\Models\Vinyl;
 use Carbon\Carbon;
 use Exception;

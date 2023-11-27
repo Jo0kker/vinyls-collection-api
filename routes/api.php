@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DiscogsController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\VerificationController;
+use App\Http\Controllers\VinylsController as ControllersVinylsController;
 use App\Rest\Controllers\CollectionsController;
 use App\Rest\Controllers\CollectionVinylsController;
 use App\Rest\Controllers\FormatVinylsController;
@@ -11,7 +12,6 @@ use App\Rest\Controllers\SearchesController;
 use App\Rest\Controllers\TradesController;
 use App\Rest\Controllers\UsersController;
 use App\Rest\Controllers\VinylsController;
-use App\Http\Controllers\VinylsController as ControllersVinylsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Lomkit\Rest\Facades\Rest;
@@ -30,6 +30,10 @@ use Lomkit\Rest\Facades\Rest;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::post('/vinyls', [ControllersVinylsController::class, 'store']);
+});
 
 Route::middleware('auth')->get('/users/me', function (Request $request) {
     return $request->user();

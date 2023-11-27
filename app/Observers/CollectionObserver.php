@@ -10,11 +10,11 @@ class CollectionObserver
 {
     public function creating(Collection $collection)
     {
-        if (!$collection->slug) {
+        if (! $collection->slug) {
             $collection->slug = Str::slug($collection->name);
         }
 
-        if (!$collection->user_id) {
+        if (! $collection->user_id) {
             $collection->user()->associate(Auth::user());
         }
     }
@@ -58,6 +58,4 @@ class CollectionObserver
     {
         //
     }
-
-
 }

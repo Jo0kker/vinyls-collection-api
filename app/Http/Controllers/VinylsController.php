@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VinylRequest;
 use App\Models\Vinyl;
 use App\Services\DiscogsDataMapper;
 use App\Services\DiscogsService;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -15,8 +15,7 @@ class VinylsController extends Controller
     public function __construct(
         private readonly DiscogsService $discogsService,
         private readonly DiscogsDataMapper $discogsDataMapper
-    )
-    {
+    ) {
     }
 
     public function addDiscogs(Request $request)
@@ -27,7 +26,7 @@ class VinylsController extends Controller
         ];
 
         $messages = [
-            'discog_id.unique' => 'The discog id has already been taken.',
+            'discog_id.unique' => 'Le vinyle est déjà présent dans la base de données.',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -49,19 +48,27 @@ class VinylsController extends Controller
         if ($storageSystem === 'do') {
             $imageFolder = config('filesystems.disks.do.folder');
         } else {
-            $imageFolder = "public";
+            $imageFolder = 'public';
         }
         $imageName = $imageFolder.'/'.$vinyl['discog_id'].'.jpeg';
 
         Storage::put(
             $imageName,
             $image, [
-            'visibility' => 'public',
-        ]);
+                'visibility' => 'public',
+            ]);
         $path = Storage::url($imageName);
         $vinyl['image'] = $path;
 
         $vinyl = Vinyl::create($vinyl);
+
+        return response()->json($vinyl);
+    }
+
+    public function store(VinylRequest $request)
+    {
+        $this->authorize('create', Vinyl::class);
+        $vinyl = Vinyl::create($request->validated());
 
         return response()->json($vinyl);
     }
