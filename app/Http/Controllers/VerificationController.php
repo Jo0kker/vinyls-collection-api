@@ -20,8 +20,7 @@ class VerificationController extends Controller
         if (! $user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
         }
-
-        return redirect()->to(env('APP_WEB').'/confirm-email');
+        return redirect()->to(config('app.url').'/confirm-email');
     }
 
     public function resend()
