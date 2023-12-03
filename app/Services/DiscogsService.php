@@ -51,7 +51,6 @@ use JsonException;
 
     public function search($title = '', $artist = '', $year = '', $page = 1, $perPage = 10): object
     {
-        $discogToken = config('app.discogs.token');
         $response = $this->client->request(
             method: 'GET',
             uri: 'database/search',
@@ -63,7 +62,7 @@ use JsonException;
                     'page' => $page,
                     'per_page' => $perPage,
                     'type' => 'master',
-                    'token' => $discogToken,
+                    'token' => $this->discogToken,
                 ],
             ]);
 
