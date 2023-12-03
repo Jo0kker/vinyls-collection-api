@@ -2,18 +2,13 @@
 
 namespace App\Http\Requests;
 
-use Orion\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
-class VinylRequest extends Request
+class VinylRequest extends FormRequest
 {
     private const REQUIRED_STRING = 'required|string|max:255';
 
-    public function commonRules(): array
-    {
-        return [];
-    }
-
-    public function storeRules(): array
+    public function rules(): array
     {
         return [
             'title' => self::REQUIRED_STRING,
@@ -27,8 +22,8 @@ class VinylRequest extends Request
                 },
             ],
             'track_list' => 'json',
-            'released' => 'required|date',
-            'provenance' => self::REQUIRED_STRING,
+            'released' => 'string',
+            'provenance' => 'string',
             'discog_id' => 'integer',
             'discog_url' => 'string',
             'discog_videos' => 'string',

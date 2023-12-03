@@ -31,6 +31,10 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
 
+Route::group(['middleware' => ['auth']], function () {
+    Route::post('/vinyls', [ControllersVinylsController::class, 'store']);
+});
+
 Route::middleware('auth')->get('/users/me', function (Request $request) {
     return $request->user();
 });

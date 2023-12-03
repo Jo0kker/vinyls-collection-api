@@ -11,8 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // change format on collection_vinyls to string
-        // remove format_vinyl_id col and add format col
         Schema::table('collection_vinyls', function (Blueprint $table) {
             $table->dropForeign('collection_vinyls_format_vinyl_id_foreign');
             $table->dropColumn('format_vinyl_id');

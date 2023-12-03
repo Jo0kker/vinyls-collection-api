@@ -213,4 +213,11 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    /*
+     * Custom config
+     */
+    'discogs' => [
+        'token' => env('DISCOGS_TOKEN'),
+    ],
+
 ];

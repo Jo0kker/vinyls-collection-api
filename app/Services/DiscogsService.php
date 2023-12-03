@@ -17,6 +17,7 @@ use JsonException;
                 'User-Agent' => 'VinylApp/0.1 +https://vinylapp.com',
             ],
         ]);
+        $this->discogToken = config('app.discogs.token');
     }
 
     public function getVinylData($artist, $title): object
@@ -26,7 +27,7 @@ use JsonException;
                 'q' => $artist.' '.$title,
                 'type' => 'release',
                 'per_page' => 1,
-                'token' => env('DISCOGS_TOKEN'),
+                'token' => $this->discogToken,
             ],
         ]);
 
@@ -41,7 +42,7 @@ use JsonException;
     {
         $response = $this->client->request('GET', 'masters/'.$id, [
             'query' => [
-                'token' => env('DISCOGS_TOKEN'),
+                'token' => $this->discogToken,
             ],
         ]);
 
@@ -61,7 +62,7 @@ use JsonException;
                     'page' => $page,
                     'per_page' => $perPage,
                     'type' => 'master',
-                    'token' => env('DISCOGS_TOKEN'),
+                    'token' => $this->discogToken,
                 ],
             ]);
 
