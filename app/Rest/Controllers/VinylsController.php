@@ -11,7 +11,7 @@ class VinylsController extends RestController
     /**
      * The resource the controller corresponds to.
      *
-     * @var class-string<Resource>
+     * @var class-string<resource>
      */
     public static $resource = VinylResource::class;
 }

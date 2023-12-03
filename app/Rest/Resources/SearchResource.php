@@ -5,7 +5,6 @@ namespace App\Rest\Resources;
 use App\Models\Search;
 use App\Rest\Resource as RestResource;
 use App\Rules\UniqueVinyl;
-use App\Rules\UniqueVinylInCollection;
 use Illuminate\Database\Eloquent\Model;
 use Lomkit\Rest\Http\Requests\RestRequest;
 use Lomkit\Rest\Relations\BelongsTo;
@@ -31,12 +30,13 @@ class SearchResource extends RestResource
 
     public function rules(RestRequest $request): array
     {
-        $attributes = (array)$request->input('mutate')[0]['attributes'];
+        $attributes = (array) $request->input('mutate')[0]['attributes'];
+
         return [
             'vinyl_id' => [
                 'required',
                 'exists:vinyls,id',
-                new UniqueVinyl($attributes, 'searches')
+                new UniqueVinyl($attributes, 'searches'),
             ],
         ];
     }
@@ -49,16 +49,18 @@ class SearchResource extends RestResource
         ];
     }
 
-    public function scopes(RestRequest $request): array {
+    public function scopes(RestRequest $request): array
+    {
         return [];
     }
 
-    public function limits(RestRequest $request): array {
+    public function limits(RestRequest $request): array
+    {
         return [
-            1,2,3,4,5,6,7,8,9,
+            1, 2, 3, 4, 5, 6, 7, 8, 9,
             10,
             25,
-            50
+            50,
         ];
     }
 }

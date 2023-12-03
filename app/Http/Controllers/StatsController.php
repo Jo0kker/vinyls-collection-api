@@ -20,6 +20,8 @@ class StatsController extends Controller
             'vinyls' => $vinylCount,
         ];
 
-        return response()->json($stats);
+        return response()->json([
+            'data' => $stats,
+        ]);
     }
 }

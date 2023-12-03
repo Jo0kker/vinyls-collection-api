@@ -5,12 +5,9 @@ namespace App\Rest\Resources;
 use App\Models\Collection;
 use App\Rest\Resource as RestResource;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
 use Lomkit\Rest\Http\Requests\RestRequest;
 use Lomkit\Rest\Relations\BelongsToMany;
 use Lomkit\Rest\Relations\HasMany;
-use Lomkit\Rest\Relations\HasManyThrough;
 use Lomkit\Rest\Relations\HasOne;
 
 class CollectionResource extends RestResource
@@ -30,7 +27,7 @@ class CollectionResource extends RestResource
             'slug',
             'description',
             'created_at',
-            'updated_at'
+            'updated_at',
         ];
     }
 
@@ -40,15 +37,17 @@ class CollectionResource extends RestResource
             HasOne::make('user', UserResource::class),
             HasMany::make('collectionVinyls', CollectionVinylResource::class),
             BelongsToMany::make('vinyls', VinylResource::class)
-                ->withPivotFields(['format_vinyl_id'])
+                ->withPivotFields(['format_vinyl_id']),
         ];
     }
-    public function limits(RestRequest $request): array {
+
+    public function limits(RestRequest $request): array
+    {
         return [
-            1,2,3,4,5,6,7,8,9,
+            1, 2, 3, 4, 5, 6, 7, 8, 9,
             10,
             25,
-            50
+            50,
         ];
     }
 }

@@ -13,7 +13,7 @@ class TradeObserver
      */
     public function creating(Trade $trade): void
     {
-        if (!$trade->user_id) {
+        if (! $trade->user_id) {
             $trade->user()->associate(Auth::user());
         }
     }

@@ -40,10 +40,10 @@ it('udpate user', function () {
                 'operation' => 'update',
                 'key' => $user->id,
                 'attributes' => [
-                    'first_name' => 'test_edit'
+                    'first_name' => 'test_edit',
                 ],
-            ]
-        ]
+            ],
+        ],
     ]);
 
     $response->assertStatus(200);

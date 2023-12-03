@@ -15,7 +15,6 @@ class CollectionPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param User $user
      * @return Response|bool
      */
     public function viewAny(?User $user)
@@ -26,7 +25,6 @@ class CollectionPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param User $user
      * @param  Search  $search
      * @return Response|bool
      */

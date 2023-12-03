@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Vinyl;
 use App\Services\DiscogsDataMapper;
 use App\Services\DiscogsService;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -15,8 +14,7 @@ class VinylsController extends Controller
     public function __construct(
         private readonly DiscogsService $discogsService,
         private readonly DiscogsDataMapper $discogsDataMapper
-    )
-    {
+    ) {
     }
 
     public function addDiscogs(Request $request)
@@ -49,15 +47,15 @@ class VinylsController extends Controller
         if ($storageSystem === 'do') {
             $imageFolder = config('filesystems.disks.do.folder');
         } else {
-            $imageFolder = "public";
+            $imageFolder = 'public';
         }
         $imageName = $imageFolder.'/'.$vinyl['discog_id'].'.jpeg';
 
         Storage::put(
             $imageName,
             $image, [
-            'visibility' => 'public',
-        ]);
+                'visibility' => 'public',
+            ]);
         $path = Storage::url($imageName);
         $vinyl['image'] = $path;
 

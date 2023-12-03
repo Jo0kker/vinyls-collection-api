@@ -12,7 +12,7 @@ class SearchObserver
      */
     public function creating(Search $search): void
     {
-        if (!$search->user_id) {
+        if (! $search->user_id) {
             $search->user()->associate(Auth::user());
         }
     }
