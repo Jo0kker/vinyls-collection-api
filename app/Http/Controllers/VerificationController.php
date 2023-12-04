@@ -21,7 +21,7 @@ class VerificationController extends Controller
             $user->markEmailAsVerified();
         }
 
-        return redirect()->to(config('app.url').'/confirm-email');
+        return redirect()->to(config('app.web').'/confirm-email');
     }
 
     public function resend()
