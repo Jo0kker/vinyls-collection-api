@@ -40,8 +40,8 @@ class VinylFactory extends Factory
         }
 
         if (isset($discogsData->id)) {
-            if ($discogsData->thumb) {
-                $image = $discogsData->thumb;
+            if ($discogsData->images[0]->uri !== '') {
+                $image = $discogsData->images[0]->uri;
                 $imageData = file_get_contents($image);
                 $imageName = $discogsData->id.'.jpeg';
                 Storage::put($imageName, $imageData);
