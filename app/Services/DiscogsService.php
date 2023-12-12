@@ -96,7 +96,6 @@ use JsonException;
                     $vinyl->$value = $vinyl->$key;
                     break;
             }
-            unset($vinyl->$key);
         }
 
         return $vinyl;
