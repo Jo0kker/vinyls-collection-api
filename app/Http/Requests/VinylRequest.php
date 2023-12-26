@@ -17,7 +17,7 @@ class VinylRequest extends FormRequest
             'image' => [
                 function ($attribute, $value, $fail) {
                     if (! filter_var($value, FILTER_VALIDATE_URL) && ! is_uploaded_file($value)) {
-                        $fail('The '.$attribute.' field must be either a valid URL or a valid uploaded file.');
+                        $fail('L\'image n\'est pas valide');
                     }
                 },
             ],

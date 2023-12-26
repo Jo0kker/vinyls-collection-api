@@ -22,11 +22,12 @@ class VinylsController extends Controller
     {
         $this->authorize('create', Vinyl::class);
         $rules = [
-            'discog_id' => 'required|integer|unique:vinyls,discog_id',
+            'discog_id' => 'required|integer',
+            'type' => 'required|string',
         ];
 
         $messages = [
-            'discog_id.unique' => 'Le vinyle est déjà présent dans la base de données.',
+            'discog_id.unique' => 'Id non conforme',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -35,8 +36,21 @@ class VinylsController extends Controller
         }
 
         $discog_id = $request->input('discog_id');
-        $discog = $this->discogsService->getVinylDataById($discog_id);
+        $type = \Str::plural($request->input('type'));
+
+        // check if vinyl already exist
+        $vinyl = Vinyl::query()
+            ->where('discog_id', $discog_id)
+            ->where('type', $type)
+            ->first();
+
+        if ($vinyl) {
+            return response()->json($vinyl);
+        }
+
+        $discog = $this->discogsService->getVinylDataById($discog_id, $type);
         $vinyl = $this->discogsDataMapper->mapData($discog);
+
         // save image to storage
         $image = $vinyl['image'];
         $image = str_replace('http://', 'https://', $image);

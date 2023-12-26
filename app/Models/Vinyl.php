@@ -18,6 +18,7 @@ class Vinyl extends Model
         'genre',
         'image',
         'track_list',
+        'type',
         'released',
         'provenance',
         'discog_id',

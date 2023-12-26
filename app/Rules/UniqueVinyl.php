@@ -30,7 +30,7 @@ class UniqueVinyl implements ValidationRule
             ->exists();
 
         if ($exists) {
-            $fail('The vinyl already exists in this collection.');
+            $fail('Le vinyle est déjà présent dans votre collection.');
         }
     }
 }

@@ -32,6 +32,7 @@ class VinylResource extends Resource
             'discog_id',
             'discog_url',
             'discog_videos',
+            'type',
             'created_at',
             'updated_at',
         ];
@@ -52,6 +53,7 @@ class VinylResource extends Resource
         return [
             1, 2, 3, 4, 5, 6, 7, 8, 9,
             10,
+            12,
             25,
             50,
         ];

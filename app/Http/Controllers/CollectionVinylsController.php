@@ -32,7 +32,7 @@ class CollectionVinylsController extends Controller
             $collectionVinyl = CollectionVinyl::where('collection_id', $collection)
                 ->where('vinyl_id', $vinyl->id)->first();
             if ($collectionVinyl) {
-                return response()->json(['message' => 'Vinyl already exists in collection'], 409);
+                return response()->json(['message' => 'Le vinyle est déjà présent dans votre collection.'], 409);
             }
             $collectionVinyl = new CollectionVinyl();
             $collectionVinyl->collection_id = $collection;

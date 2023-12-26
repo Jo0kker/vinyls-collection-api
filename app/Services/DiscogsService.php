@@ -38,18 +38,21 @@ use JsonException;
      * @throws GuzzleException
      * @throws JsonException
      */
-    public function getVinylDataById($id): object
+    public function getVinylDataById($id, $type = 'masters'): object
     {
-        $response = $this->client->request('GET', 'masters/'.$id, [
+        $response = $this->client->request('GET', $type.'/'.$id, [
             'query' => [
                 'token' => $this->discogToken,
             ],
         ]);
+        $response = json_decode($response->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
+        $response->image = $response->images[0]->uri;
+        $response->type = $type === 'masters' ? 'masters' : 'releases';
 
-        return json_decode($response->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
+        return $response;
     }
 
-    public function search($title = '', $artist = '', $year = '', $page = 1, $perPage = 10): object
+    public function search($title = '', $artist = '', $year = '', $page = 1, $perPage = 10, $type = ''): object
     {
         $response = $this->client->request(
             method: 'GET',
@@ -61,7 +64,7 @@ use JsonException;
                     'year' => $year,
                     'page' => $page,
                     'per_page' => $perPage,
-                    'type' => 'master',
+                    'type' => $type,
                     'token' => $this->discogToken,
                 ],
             ]);
@@ -83,20 +86,20 @@ use JsonException;
         ];
 
         foreach ($nameToConvert as $key => $value) {
+            if (! isset($vinyl->$key)) {
+                continue;
+            }
             switch ($key) {
                 case 'format':
-                    unset($vinyl->$value);
                     $vinyl->$value = $vinyl->$key;
                     break;
                 case 'uri':
                     $vinyl->$value = 'https://www.discogs.com'.$vinyl->$key;
-                    unset($vinyl->$key);
                     break;
                 default:
                     $vinyl->$value = $vinyl->$key;
                     break;
             }
-            unset($vinyl->$key);
         }
 
         return $vinyl;

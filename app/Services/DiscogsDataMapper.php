@@ -7,11 +7,7 @@ namespace App\Services;
  */
 class DiscogsDataMapper
 {
-    // vinyl_field title
-    //discog_url
-    //discog_videos
-
-    // discogs_field => vinyl_field
+    /// discogs_field => vinyl_field
     private $mappingField = [
         'id' => 'discog_id',
         'title' => 'title',
@@ -23,59 +19,43 @@ class DiscogsDataMapper
         'country' => 'provenance',
         'videos' => 'discog_videos',
         'uri' => 'discog_url',
+        'type' => 'type',
     ];
 
     public function mapData($discogsData): array
     {
         $vinyl = [];
-        foreach ($this->mappingField as $discogsField => $vinylField) {
-            if (! isset($discogsData->$discogsField)) {
-                continue;
-            }
+
+        // Boucle sur toutes les données de Discogs
+        foreach ($discogsData as $discogsField => $value) {
+            // Détermine le champ de sortie en vérifiant si une correspondance existe dans $mappingField
+            $vinylField = $this->mappingField[$discogsField] ?? $discogsField;
+
+            // Applique la transformation si nécessaire
             switch ($vinylField) {
                 case 'genre':
-                    // loop on genres and concat them
-                    $genres = [];
-                    foreach ($discogsData->$discogsField as $genre) {
-                        $genres[] = $genre;
-                    }
-                    $vinyl[$vinylField] = implode(', ', $genres);
+                    $vinyl[$vinylField] = implode(', ', $value);
                     break;
                 case 'discog_img':
-                    // transform to json
-                    $images = [];
-                    foreach ($discogsData->$discogsField as $image) {
-                        $images[] = $image;
-                    }
-                    $vinyl['image'] = $images[0]->uri;
-                    $vinyl[$vinylField] = json_encode($images);
+                    $vinyl['image'] = $value[0]->uri ?? null;
+                    $vinyl[$vinylField] = json_encode($value);
                     break;
                 case 'track_list':
-                    // transform to json
-                    $trackList = [];
-                    foreach ($discogsData->$discogsField as $track) {
-                        $trackList[] = $track;
-                    }
-                    $vinyl[$vinylField] = json_encode($trackList);
+                    $vinyl[$vinylField] = json_encode($value);
                     break;
                 case 'discog_videos':
-                    // transform to json
-                    $videos = [];
-                    foreach ($discogsData->$discogsField as $video) {
-                        $videos[] = $video;
-                    }
-                    $vinyl[$vinylField] = json_encode($videos);
+                    $vinyl[$vinylField] = json_encode($value);
                     break;
                 case 'artist':
-                    // loop on artists and concat them
                     $artists = [];
-                    foreach ($discogsData->$discogsField as $artist) {
-                        $artists[] = $artist->name;
+                    foreach ($value as $artist) {
+                        $artists[] = $artist->name ?? '';
                     }
                     $vinyl[$vinylField] = implode(', ', $artists);
                     break;
                 default:
-                    $vinyl[$vinylField] = $discogsData->$discogsField;
+                    // Assignation directe du champ (renommé si nécessaire)
+                    $vinyl[$vinylField] = $value;
                     break;
             }
         }
