@@ -8,6 +8,7 @@ use App\Rules\UniqueVinyl;
 use Illuminate\Database\Eloquent\Model;
 use Lomkit\Rest\Http\Requests\RestRequest;
 use Lomkit\Rest\Relations\BelongsTo;
+use Lomkit\Rest\Relations\HasMany;
 
 class TradeResource extends RestResource
 {
@@ -46,6 +47,7 @@ class TradeResource extends RestResource
         return [
             BelongsTo::make('vinyl', VinylResource::class),
             BelongsTo::make('user', UserResource::class),
+            HasMany::make('medias', TradeMediaResource::class),
         ];
     }
 

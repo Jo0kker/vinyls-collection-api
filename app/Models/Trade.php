@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Trade extends Model
 {
@@ -35,5 +36,10 @@ class Trade extends Model
     public function vinyl(): BelongsTo
     {
         return $this->belongsTo(Vinyl::class);
+    }
+
+    public function medias(): HasMany
+    {
+        return $this->hasMany(TradeMedia::class);
     }
 }
