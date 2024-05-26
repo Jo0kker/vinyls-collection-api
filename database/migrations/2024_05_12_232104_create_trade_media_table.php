@@ -14,9 +14,7 @@ return new class extends Migration
         Schema::create('trade_media', function (Blueprint $table) {
             $table->id();
             $table->foreignId('trade_id')->constrained();
-            $table->string('type');
-            $table->string('url');
-            $table->string('title')->nullable();
+            $table->foreignId('file_id')->constrained('fileponds');
             $table->timestamps();
         });
     }

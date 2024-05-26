@@ -15,7 +15,6 @@
         "laravel/tinker": "^v2.8",
         "league/flysystem-aws-s3-v3": "^3.12",
         "lomkit/laravel-rest-api": "^2.3.2",
-
         "spatie/laravel-permission": "^6.7.0",
         "symfony/http-client": "^6.1",
         "symfony/mailgun-mailer": "^6.1"

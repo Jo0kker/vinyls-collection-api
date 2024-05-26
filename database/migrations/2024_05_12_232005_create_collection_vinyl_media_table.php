@@ -14,9 +14,7 @@ return new class extends Migration
         Schema::create('collection_vinyl_media', function (Blueprint $table) {
             $table->id();
             $table->foreignId('collection_vinyl_id')->constrained();
-            $table->string('type');
-            $table->string('url');
-            $table->string('title');
+            $table->foreignId('file_id')->constrained('fileponds');
             $table->timestamps();
         });
     }

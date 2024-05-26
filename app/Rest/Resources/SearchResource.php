@@ -34,7 +34,6 @@ class SearchResource extends RestResource
 
         return [
             'vinyl_id' => [
-                'required',
                 'exists:vinyls,id',
                 new UniqueVinyl($attributes, 'searches'),
             ],
