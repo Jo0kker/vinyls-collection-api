@@ -13,6 +13,7 @@ class TradeMedia extends Model
 
     protected $fillable = [
         'trade_id',
+        'file_id',
         'type',
         'url',
         'title',
@@ -21,5 +22,10 @@ class TradeMedia extends Model
     public function trade(): BelongsTo
     {
         return $this->belongsTo(Trade::class);
+    }
+
+    public function file(): BelongsTo
+    {
+        return $this->belongsTo(Filepond::class);
     }
 }

@@ -27,7 +27,6 @@ class UploadController extends Controller
         $filepond->mimetypes = $file->getMimeType();
         $filepond->disk = $disk;
         $filepond->created_by = auth()->id(); // Assure-toi que l'authentification est gérée
-        $filepond->expires_at = now()->addDay();
         $filepond->save();
 
         return response($filepond->id, 200)->header('Content-Type', 'text/plain');

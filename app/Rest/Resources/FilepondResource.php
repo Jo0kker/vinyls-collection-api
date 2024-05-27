@@ -2,34 +2,33 @@
 
 namespace App\Rest\Resources;
 
-use App\Models\TradeMedia;
+use App\Models\Filepond;
 use App\Rest\Resource as RestResource;
 use Lomkit\Rest\Http\Requests\RestRequest;
-use Lomkit\Rest\Relations\BelongsTo;
 
-class TradeMediaResource extends RestResource
+class FilepondResource extends RestResource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var class-string<\Illuminate\Database\Eloquent\Model>
      */
-    public static $model = TradeMedia::class;
+    public static $model = Filepond::class;
 
     /**
      * The exposed fields that could be provided
      * @param RestRequest $request
      * @return array
      */
-    public function fields(RestRequest $request): array
+    public function fields(\Lomkit\Rest\Http\Requests\RestRequest $request): array
     {
         return [
             'id',
-            'trade_id',
-            'file_id',
-            'type',
-            'url',
-            'title'
+            'filename',
+            'filepath',
+            'extension',
+            'mimetypes',
+            'disk',
         ];
     }
 
@@ -38,12 +37,9 @@ class TradeMediaResource extends RestResource
      * @param RestRequest $request
      * @return array
      */
-    public function relations(RestRequest $request): array
+    public function relations(\Lomkit\Rest\Http\Requests\RestRequest $request): array
     {
-        return [
-            BelongsTo::make('trade', TradeResource::class),
-            BelongsTo::make('file', FilepondResource::class)
-        ];
+        return [];
     }
 
     /**
@@ -51,7 +47,7 @@ class TradeMediaResource extends RestResource
      * @param RestRequest $request
      * @return array
      */
-    public function scopes(RestRequest $request): array
+    public function scopes(\Lomkit\Rest\Http\Requests\RestRequest $request): array
     {
         return [];
     }
@@ -61,7 +57,7 @@ class TradeMediaResource extends RestResource
      * @param RestRequest $request
      * @return array
      */
-    public function limits(RestRequest $request): array
+    public function limits(\Lomkit\Rest\Http\Requests\RestRequest $request): array
     {
         return [
             10,
@@ -75,7 +71,7 @@ class TradeMediaResource extends RestResource
      * @param RestRequest $request
      * @return array
      */
-    public function actions(RestRequest $request): array {
+    public function actions(\Lomkit\Rest\Http\Requests\RestRequest $request): array {
         return [];
     }
 
@@ -84,7 +80,7 @@ class TradeMediaResource extends RestResource
      * @param RestRequest $request
      * @return array
      */
-    public function instructions(RestRequest $request): array {
+    public function instructions(\Lomkit\Rest\Http\Requests\RestRequest $request): array {
         return [];
     }
 }

@@ -29,7 +29,7 @@ class TradeMediaPolicy
      */
     public function create(User $user, TradeMedia $tradeMedia): bool
     {
-        return $user->trades()->contains($tradeMedia->trade);
+        return true;
     }
 
     /**
