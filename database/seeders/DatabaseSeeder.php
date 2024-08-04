@@ -15,6 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // add passport client in oauth_clients table directly (from env)
+        $this->call(PassportClientSeeder::class);
+
+
+
         User::factory(100)
             ->afterCreating(
                 function ($user) {

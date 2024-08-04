@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Policies\MediaPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class AuthServiceProvider extends ServiceProvider
 {

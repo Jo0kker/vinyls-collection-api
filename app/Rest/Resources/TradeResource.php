@@ -26,6 +26,8 @@ class TradeResource extends RestResource
             'description',
             'vinyl_id',
             'format',
+            'user_id',
+            'media'
         ];
     }
 
@@ -46,7 +48,7 @@ class TradeResource extends RestResource
         return [
             BelongsTo::make('vinyl', VinylResource::class),
             BelongsTo::make('user', UserResource::class),
-            HasMany::make('medias', TradeMediaResource::class),
+            HasMany::make('media', MediaResource::class),
         ];
     }
 

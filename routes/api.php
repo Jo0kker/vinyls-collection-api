@@ -36,11 +36,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/vinyls', [ControllersVinylsController::class, 'store']);
 });
 
-Route::post('/process', [UploadController::class, 'process']);
-Route::post('/revert', [UploadController::class, 'revert']);
-Route::post('/restore', [UploadController::class, 'restore']);
-Route::get('/load/{id}', [UploadController::class, 'load']);
-Route::get('/fetch', [UploadController::class, 'fetch']);
+// route group for media
+Route::group(['prefix' => 'media'], function () {
+    Route::post('/process', [UploadController::class, 'process']);
+    Route::post('/revert', [UploadController::class, 'revert']);
+    Route::post('/restore', [UploadController::class, 'restore']);
+    Route::get('/load/{id}', [UploadController::class, 'load']);
+    Route::get('/fetch', [UploadController::class, 'fetch']);
+    Route::delete('/delete', [UploadController::class, 'delete']);
+});
 
 Route::middleware('auth')->get('/users/me', function (Request $request) {
     return $request->user();

@@ -36,7 +36,7 @@ class CollectionVinylResource extends RestResource
         return [
             HasOne::make('vinyl', VinylResource::class),
             HasOne::make('collection', CollectionResource::class),
-            HasMany::make('medias', CollectionVinylMediaResource::class),
+            HasMany::make('media', MediaResource::class),
         ];
     }
 

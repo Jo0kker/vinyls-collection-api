@@ -2,19 +2,22 @@
 
 namespace App\Rest\Resources;
 
-use App\Models\TradeMedia;
 use App\Rest\Resource as RestResource;
+use Lomkit\Rest\Concerns\Resource\DisableAuthorizations;
+use Lomkit\Rest\Concerns\Resource\DisableGates;
 use Lomkit\Rest\Http\Requests\RestRequest;
-use Lomkit\Rest\Relations\BelongsTo;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class TradeMediaResource extends RestResource
+class MediaResource extends RestResource
 {
+    use DisableGates, DisableAuthorizations;
+
     /**
      * The model the resource corresponds to.
      *
      * @var class-string<\Illuminate\Database\Eloquent\Model>
      */
-    public static $model = TradeMedia::class;
+    public static $model = Media::class;
 
     /**
      * The exposed fields that could be provided
@@ -25,11 +28,18 @@ class TradeMediaResource extends RestResource
     {
         return [
             'id',
-            'trade_id',
-            'file_id',
-            'type',
-            'url',
-            'title'
+            'model_type',
+            'model_id',
+            'uuid',
+            'collection_name',
+            'name',
+            'file_name',
+            'mime_type',
+            'disk',
+            'conversions_disk',
+            'size',
+            'original_url',
+            'preview_url',
         ];
     }
 
@@ -40,10 +50,7 @@ class TradeMediaResource extends RestResource
      */
     public function relations(RestRequest $request): array
     {
-        return [
-            BelongsTo::make('trade', TradeResource::class),
-            BelongsTo::make('file', FilepondResource::class)
-        ];
+        return [];
     }
 
     /**

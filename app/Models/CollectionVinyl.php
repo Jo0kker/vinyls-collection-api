@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class CollectionVinyl extends Model
+class CollectionVinyl extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $fillable = [
         'collection_id',
@@ -36,10 +38,5 @@ class CollectionVinyl extends Model
     public function vinyl(): HasOne
     {
         return $this->hasOne(Vinyl::class, 'id', 'vinyl_id');
-    }
-
-    public function medias(): HasMany
-    {
-        return $this->hasMany(CollectionVinylMedia::class);
     }
 }
