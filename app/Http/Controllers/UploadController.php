@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -22,12 +23,19 @@ class UploadController extends Controller
             return response('No file uploaded', 400);
         }
 
-        $authorizedModelTypes = [CollectionVinyl::class, Trade::class];
-        if (!in_array($request->input('model_type'), $authorizedModelTypes, true)) {
-            return response('Unauthorized model type', 400);
-        }
+        Gate::authorize('create', [Media::class, $request]);
 
         $file = $request->file('filepond');
+
+        // check file extension
+        if (!in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'webp'])) {
+            return response('Invalid file type', 400);
+        }
+
+        if ($file->getSize() > 10000000) { // 10MB
+            return response('File is too large', 400);
+        }
+
         $uniqueId = Str::random(12);
         $disk = config('filesystems.default');
         $path = $file->storeAs('tmp/' . $uniqueId, $file->getClientOriginalName(), $disk);
@@ -115,9 +123,27 @@ class UploadController extends Controller
         $file_name = $request->input('file_name');
         $media = Media::where('file_name', $file_name)->first();
         if ($media) {
-            Storage::disk($media->disk)->delete($media->file_name);
-            $media->delete();
-            return response()->json(null, 204);
+            try {
+                $disk = $media->disk;
+                $bucket_name = config("filesystems.disks.{$disk}.bucket");
+                $url_path = parse_url($media->file_name, PHP_URL_PATH);
+                $path = str_replace("{$bucket_name}/", '', ltrim($url_path, '/'));
+
+                if (Storage::disk($media->disk)->exists($path)) {
+                    Storage::disk($media->disk)->delete($path);
+                } else {
+                    return response()->json(['error' => 'File not found on S3.'], 404);
+                }
+
+                // Supprimer l'entrée de la base de données
+                $media->delete();
+                return response()->json(null, 204);
+
+            } catch (Exception $e) {
+                return response()->json(['error' => $e->getMessage()], 500);
+            }
+        } else {
+            return response()->json(['error' => 'File not found in database.'], 404);
         }
     }
 }
