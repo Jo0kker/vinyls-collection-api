@@ -39,6 +39,11 @@ class MediaPolicy
             return false;
         }
 
+        // check if user has verified email
+        if (!$user->hasVerifiedEmail()) {
+            return false;
+        }
+
         if ($modelType === CollectionVinyl::class) {
             $model = CollectionVinyl::find($modelId);
             $owner = $model->collection->user;
