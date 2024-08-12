@@ -11,6 +11,7 @@
         "laravel/framework": "^v11.6.0",
         "laravel/passport": "^v12.0",
         "laravel/sanctum": "^v4",
+        "laravel/scout": "^10.11",
         "laravel/telescope": "^5",
         "laravel/tinker": "^v2.8",
         "league/flysystem-aws-s3-v3": "^3.12",

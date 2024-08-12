@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class CollectionVinyl extends Model implements HasMedia
 {
@@ -38,5 +39,13 @@ class CollectionVinyl extends Model implements HasMedia
     public function vinyl(): HasOne
     {
         return $this->hasOne(Vinyl::class, 'id', 'vinyl_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function media(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(Media::class, 'model');
     }
 }
