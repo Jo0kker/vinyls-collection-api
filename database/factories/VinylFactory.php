@@ -75,6 +75,7 @@ class VinylFactory extends Factory
                 'released' => $released,
                 'provenance' => $discogsData->country ?? null,
                 'discog_id' => $discogsData->id,
+                'type' => 'masters',
                 'discog_url' => $discogsData->uri,
                 'discog_videos' => json_encode($videos),
             ];

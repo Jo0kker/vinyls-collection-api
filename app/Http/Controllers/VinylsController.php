@@ -51,8 +51,42 @@ class VinylsController extends Controller
         $discog = $this->discogsService->getVinylDataById($discog_id, $type);
         $vinyl = $this->discogsDataMapper->mapData($discog);
 
+        $vinyl['image'] = $this->importImage($vinyl['image'], $type, $discog_id);
+
+        $vinyl = Vinyl::create($vinyl);
+
+        return response()->json($vinyl);
+    }
+
+    public function store(VinylRequest $request)
+    {
+        $this->authorize('create', Vinyl::class);
+        $vinyl = Vinyl::create($request->validated());
+
+        return response()->json($vinyl);
+    }
+
+    public function updateDiscoq($id)
+    {
+        $vinyl = Vinyl::find($id);
+
+        if (!$vinyl instanceof Vinyl) {
+            return response()->json(['error' => 'Vinyl not found'], 404);
+        }
+
+        $discog = $this->discogsService->getVinylDataById($vinyl->discog_id, $vinyl->type);
+        $data = $this->discogsDataMapper->mapData($discog);
+
+        $data['image'] = $this->importImage($data['image'], $data['type'], $data['discog_id']);
+
+        $vinyl->update($data);
+
+        return response()->json($vinyl);
+    }
+
+    private function importImage($image, $type, $discog_id)
+    {
         // save image to storage
-        $image = $vinyl['image'];
         $image = str_replace('http://', 'https://', $image);
         // context change user agent
 //        $opts = [
@@ -74,26 +108,13 @@ class VinylsController extends Controller
             $imageFolder = 'public';
         }
         // save image as first letter of type + discog_id
-        $imageName = $imageFolder.'/'.$type[0].$discog_id.'.jpg';
+        $imageName = $imageFolder . '/' . $type[0] . $discog_id . '.jpg';
 
         Storage::put(
             $imageName,
             $image, [
-                'visibility' => 'public',
-            ]);
-        $path = Storage::url($imageName);
-        $vinyl['image'] = $path;
-
-        $vinyl = Vinyl::create($vinyl);
-
-        return response()->json($vinyl);
-    }
-
-    public function store(VinylRequest $request)
-    {
-        $this->authorize('create', Vinyl::class);
-        $vinyl = Vinyl::create($request->validated());
-
-        return response()->json($vinyl);
+            'visibility' => 'public',
+        ]);
+        return Storage::url($imageName);
     }
 }

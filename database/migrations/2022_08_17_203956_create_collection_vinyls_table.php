@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('collection_vinyls', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('collection_id')->constrained();
+            $table->foreignId('collection_id')->constrained()->onDelete('cascade');
             $table->foreignId('vinyl_id')->constrained();
             $table->foreignId('format_vinyl_id')->nullable()->constrained();
             $table->timestamps();
