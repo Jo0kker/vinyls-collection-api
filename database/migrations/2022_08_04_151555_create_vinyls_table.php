@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('discog_id')->nullable();
             $table->string('discog_url')->nullable();
             $table->json('discog_videos')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
