@@ -103,9 +103,9 @@ class VinylsController extends Controller
         $storageSystem = config('filesystems.default');
 
         if ($storageSystem === 'do') {
-            $imageFolder = config('filesystems.disks.do.folder');
+            $imageFolder = config('filesystems.disks.do.folder') . '/Vinyls';
         } else {
-            $imageFolder = 'public';
+            $imageFolder = 'Vinyls';
         }
         // save image as first letter of type + discog_id
         $imageName = $imageFolder . '/' . $type[0] . $discog_id . '.jpg';

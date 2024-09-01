@@ -13,15 +13,12 @@ class VinylObserver
      */
     public function created(Vinyl $vinyl): void
     {
-        // if image is file, store it with storage
-        // if image is url, save url
-        // if image is null, save null
         if (is_uploaded_file($vinyl->image) && $vinyl->image instanceof UploadedFile) {
             $storageSystem = config('filesystems.default');
             if ($storageSystem === 'do') {
-                $imageFolder = config('filesystems.disks.do.folder');
+                $imageFolder = config('filesystems.disks.do.folder') . '/Vinyls';
             } else {
-                $imageFolder = 'public';
+                $imageFolder = 'Vinyls';
             }
             $extension = $vinyl->image->extension();
             $imageName = $imageFolder.'/vc_'.$vinyl->id.'.'.$extension;

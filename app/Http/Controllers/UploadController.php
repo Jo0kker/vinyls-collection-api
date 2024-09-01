@@ -14,7 +14,7 @@ class UploadController extends Controller
 {
     protected function getFullUrl($path)
     {
-        return Storage::disk('s3')->url($path);
+        return Storage::disk()->url($path);
     }
 
     public function process(Request $request)
@@ -36,15 +36,27 @@ class UploadController extends Controller
             return response('File is too large', 400);
         }
 
-        $uniqueId = Str::random(12);
-        $disk = config('filesystems.default');
-        $path = $file->storeAs('tmp/' . $uniqueId, $file->getClientOriginalName(), $disk);
-
-        $fullUrl = $this->getFullUrl($path);
-
         $media = new Media();
         $media->model_type = $request->input('model_type');
         $media->model_id = $request->input('model_id');
+
+        // parse to get the model type get the last part of the string and get the last
+        $model_type = explode('\\', $media->model_type);
+        $model_type = end($model_type);
+
+        $storageSystem = config('filesystems.default');
+
+        if ($storageSystem === 'do') {
+            $imageFolder = config('filesystems.disks.do.folder') . '/' . $model_type;
+        } else {
+            $imageFolder = $model_type;
+        }
+
+        $uniqueId = Str::random(12);
+        $disk = config('filesystems.default');
+        $path = $file->storeAs($imageFolder . '/' . $uniqueId, $file->getClientOriginalName(), $disk);
+
+        $fullUrl = $this->getFullUrl($path);
 
         $media->name = $file->getClientOriginalName();
         $media->file_name = $fullUrl;
