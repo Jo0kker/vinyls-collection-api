@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasUniqueVinyls;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Search extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUniqueVinyls;
 
     protected $fillable = [
         'description',

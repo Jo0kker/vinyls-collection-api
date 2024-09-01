@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('collection_id')->constrained();
             $table->foreignId('vinyl_id')->constrained();
-            $table->foreignId('format_vinyl_id')->nullable()->constrained();
+            $table->string('format')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
