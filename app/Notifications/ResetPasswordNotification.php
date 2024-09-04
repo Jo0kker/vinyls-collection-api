@@ -13,10 +13,11 @@ class ResetPasswordNotification extends Notification
     /**
      * Create a new notification instance.
      *
+     * @param string $url
      * @return void
      */
     public function __construct(
-        private string $url
+        private string $url,
     ) {
         //
     }
@@ -40,9 +41,11 @@ class ResetPasswordNotification extends Notification
      */
     public function toMail($notifiable)
     {
+        $resetUrl = $this->url;
+        
         return (new MailMessage)
             ->view('emails.reset-password')
-            ->action('Reset Password', $this->url);
+            ->action('Réinitialiser le mot de passe', $resetUrl);
     }
 
     /**

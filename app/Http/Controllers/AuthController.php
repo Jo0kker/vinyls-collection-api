@@ -7,6 +7,7 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
 
 class AuthController extends Controller
 {
@@ -48,7 +49,12 @@ class AuthController extends Controller
         $request->validate(['email' => 'required|email']);
 
         $status = Password::sendResetLink(
-            $request->only('email')
+            $request->only('email'),
+            function ($user, $token) use ($request) {
+                $url = "?token={$token}&email={$request->email}";
+                
+                $user->sendPasswordResetNotification($url);
+            }
         );
 
         return $status === Password::RESET_LINK_SENT
@@ -62,21 +68,23 @@ class AuthController extends Controller
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|confirmed',
+            'password' => 'required|confirmed|min:8',
             'password_confirmation' => 'required',
         ]);
 
         $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) {
+            $request->only('password', 'password_confirmation', 'token', 'email'),
+            function ($user, $password) use ($request) {
                 $user->forceFill([
-                    'password' => bcrypt($password),
+                    'password' => bcrypt($password)
                 ])->save();
+
+                event(new PasswordReset($user));
             }
         );
 
         return $status === Password::PASSWORD_RESET
-            ? response()->json(['message' => __($status)])
+            ? response()->json(['message' => 'Mot de passe réinitialisé avec succès'])
             : response()->json(['error' => __($status)], 400);
     }
 }

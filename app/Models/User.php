@@ -96,10 +96,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return 12;
     }
 
-    public function sendPasswordResetNotification($token)
+    public function sendPasswordResetNotification($param)
     {
-        $url = config('app.url').'/reset-password?token='.$token;
+        $url = config('app.web').'/reset-password'.$param;
 
-        $this->notify(new ResetPasswordNotification($url));
+        $this->notify(new ResetPasswordNotification($url, $this->email));
+
     }
 }
