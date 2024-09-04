@@ -70,7 +70,7 @@ class CollectionPolicy
      */
     public function restore(User $user, Collection $collection)
     {
-        //
+        return false;
     }
 
     /**
@@ -80,6 +80,6 @@ class CollectionPolicy
      */
     public function forceDelete(User $user, Collection $collection)
     {
-        //
+        return false;
     }
 }

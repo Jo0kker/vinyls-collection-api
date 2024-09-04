@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Collection;
+use App\Models\CollectionVinyl;
 use Illuminate\Support\Facades\Auth;
 use Str;
 
@@ -40,7 +41,8 @@ class CollectionObserver
      */
     public function deleted(Collection $collection): void
     {
-        //
+        // soft delete related collection_vinyls
+        $collection->collectionVinyls()->delete();
     }
 
     /**

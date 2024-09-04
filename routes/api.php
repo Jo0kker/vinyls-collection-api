@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DiscogsController;
 use App\Http\Controllers\StatsController;
+use App\Http\Controllers\UploadController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\VinylsController as ControllersVinylsController;
 use App\Rest\Controllers\CollectionsController;
@@ -33,10 +34,34 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('
 
 Route::group(['middleware' => ['auth']], function () {
     Route::post('/vinyls', [ControllersVinylsController::class, 'store']);
+    Route::put('/vinyls/discog/{id}', [ControllersVinylsController::class, 'updateDiscoq']);
+});
+
+// route group for media
+Route::group(['prefix' => 'media'], function () {
+    Route::post('/process', [UploadController::class, 'process']);
+    Route::post('/revert', [UploadController::class, 'revert']);
+    Route::post('/restore', [UploadController::class, 'restore']);
+    Route::get('/load/{id}', [UploadController::class, 'load']);
+    Route::get('/fetch', [UploadController::class, 'fetch']);
+    Route::delete('/delete', [UploadController::class, 'delete']);
 });
 
 Route::middleware('auth')->get('/users/me', function (Request $request) {
-    return $request->user();
+    $user = $request->user();
+
+    // On récupère les noms des permissions de l'utilisateur
+    $permissions = $user->getAllPermissions()->pluck('name');
+
+    // On convertit l'utilisateur en tableau sans les clés 'permissions' et 'roles'
+    $userData = $user->toArray();
+    unset($userData['permissions'], $userData['roles']);
+
+    // On ajoute la clé 'ability' avec les noms des permissions
+    $userData['ability'] = $permissions;
+
+    // On retourne les données de l'utilisateur modifiées
+    return response()->json($userData);
 });
 
 // add route to add discog vinyl

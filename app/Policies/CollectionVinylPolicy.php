@@ -67,7 +67,7 @@ class CollectionVinylPolicy
      */
     public function restore(User $user, CollectionVinyl $collectionVinyl)
     {
-        //
+        return false;
     }
 
     /**
@@ -77,6 +77,6 @@ class CollectionVinylPolicy
      */
     public function forceDelete(User $user, CollectionVinyl $collectionVinyl)
     {
-        //
+        return false;
     }
 }

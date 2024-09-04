@@ -7,6 +7,7 @@ use App\Rest\Resource as RestResource;
 use App\Rules\UniqueVinylInCollection;
 use Illuminate\Database\Eloquent\Model;
 use Lomkit\Rest\Http\Requests\RestRequest;
+use Lomkit\Rest\Relations\HasMany;
 use Lomkit\Rest\Relations\HasOne;
 
 class CollectionVinylResource extends RestResource
@@ -26,6 +27,7 @@ class CollectionVinylResource extends RestResource
             'vinyl_id',
             'format',
             'discog_id',
+            'comment',
         ];
     }
 
@@ -34,6 +36,7 @@ class CollectionVinylResource extends RestResource
         return [
             HasOne::make('vinyl', VinylResource::class),
             HasOne::make('collection', CollectionResource::class),
+            HasMany::make('media', MediaResource::class),
         ];
     }
 
@@ -55,6 +58,7 @@ class CollectionVinylResource extends RestResource
             1, 2, 3, 4, 5, 6, 7, 8, 9,
             10,
             12,
+            24,
             25,
             50,
         ];

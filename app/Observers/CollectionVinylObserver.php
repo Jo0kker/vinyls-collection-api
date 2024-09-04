@@ -6,6 +6,9 @@ use App\Models\CollectionVinyl;
 
 class CollectionVinylObserver
 {
+    /**
+     * Handle the CollectionVinyl "created" event.
+     */
     public function creating(CollectionVinyl $collectionVinyl): void
     {
         //

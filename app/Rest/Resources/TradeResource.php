@@ -8,6 +8,7 @@ use App\Rules\UniqueVinyl;
 use Illuminate\Database\Eloquent\Model;
 use Lomkit\Rest\Http\Requests\RestRequest;
 use Lomkit\Rest\Relations\BelongsTo;
+use Lomkit\Rest\Relations\HasMany;
 
 class TradeResource extends RestResource
 {
@@ -25,6 +26,8 @@ class TradeResource extends RestResource
             'description',
             'vinyl_id',
             'format',
+            'user_id',
+            'media'
         ];
     }
 
@@ -34,7 +37,6 @@ class TradeResource extends RestResource
 
         return [
             'vinyl_id' => [
-                'required',
                 'exists:vinyls,id',
                 new UniqueVinyl($attributes, 'trades'),
             ],
@@ -46,6 +48,7 @@ class TradeResource extends RestResource
         return [
             BelongsTo::make('vinyl', VinylResource::class),
             BelongsTo::make('user', UserResource::class),
+            HasMany::make('media', MediaResource::class),
         ];
     }
 

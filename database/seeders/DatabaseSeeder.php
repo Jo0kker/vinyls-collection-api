@@ -15,6 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // add passport client in oauth_clients table directly (from env)
+        $this->call(PassportClientSeeder::class);
+
+
+
         User::factory(100)
             ->afterCreating(
                 function ($user) {
@@ -30,7 +35,7 @@ class DatabaseSeeder extends Seeder
                     $user->roles()->attach(Role::where('name', 'Administrator')->first());
                 }
             )
-            ->create(['name' => 'Test User', 'email' => 'test@exemple.com']);
+            ->create(['name' => 'Test User', 'email' => 'test@example.com']);
         $this->call(BadgeSeeder::class);
         $this->call(FormatVinylsSeeder::class);
         $this->call(SearchSeeder::class);

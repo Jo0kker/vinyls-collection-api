@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('slug');
             $table->string('description')->nullable();
             $table->foreignIdFor(User::class)->constrained();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
