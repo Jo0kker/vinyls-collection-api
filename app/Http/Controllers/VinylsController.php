@@ -86,35 +86,26 @@ class VinylsController extends Controller
 
     private function importImage($image, $type, $discog_id)
     {
-        // save image to storage
         $image = str_replace('http://', 'https://', $image);
-        // context change user agent
-//        $opts = [
-//            'http' => [
-//                'method' => 'GET',
-//                'header' => 'User-Agent: Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.102011-10-16 20:23:10\r\n',
-//            ],
-//        ];
-//        $context = stream_context_create($opts);
-        // file_get_contents with user agent
-        $image = file_get_contents($image);
-        // get folder in config env
+
+        // Initialiser cURL
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $image);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3');
+        $imageData = curl_exec($ch);
+        curl_close($ch);
+
+        if ($imageData === false) {
+            throw new \Exception('Failed to download image.');
+        }
 
         $storageSystem = config('filesystems.default');
-
-        if ($storageSystem === 'do') {
-            $imageFolder = config('filesystems.disks.do.folder') . '/Vinyls';
-        } else {
-            $imageFolder = 'Vinyls';
-        }
-        // save image as first letter of type + discog_id
+        $imageFolder = $storageSystem === 'do' ? config('filesystems.disks.do.folder') . '/Vinyls' : 'Vinyls';
         $imageName = $imageFolder . '/' . $type[0] . $discog_id . '.jpg';
 
-        Storage::put(
-            $imageName,
-            $image, [
-            'visibility' => 'public',
-        ]);
+        Storage::put($imageName, $imageData, ['visibility' => 'public']);
         return Storage::url($imageName);
     }
 }
