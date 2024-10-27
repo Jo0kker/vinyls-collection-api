@@ -19,6 +19,7 @@ class UploadController extends Controller
 
     public function process(Request $request)
     {
+        dd($request->all());
         if (!$request->hasFile('filepond')) {
             return response('No file uploaded', 400);
         }

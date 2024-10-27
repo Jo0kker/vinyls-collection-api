@@ -6,6 +6,7 @@ use App\Http\Controllers\StatsController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\VinylsController as ControllersVinylsController;
+use App\Http\Controllers\UsersController as ControllersUsersController;
 use App\Rest\Controllers\CollectionsController;
 use App\Rest\Controllers\CollectionVinylsController;
 use App\Rest\Controllers\FormatVinylsController;
@@ -35,6 +36,7 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('
 Route::group(['middleware' => ['auth']], function () {
     Route::post('/vinyls', [ControllersVinylsController::class, 'store']);
     Route::put('/vinyls/discog/{id}', [ControllersVinylsController::class, 'updateDiscoq']);
+    Route::post('/users/profile', [ControllersUsersController::class, 'updateProfile']);
 });
 
 // route group for media
