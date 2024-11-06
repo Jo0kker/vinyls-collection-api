@@ -8,7 +8,7 @@ use App\Rules\UniqueVinyl;
 use Illuminate\Database\Eloquent\Model;
 use Lomkit\Rest\Http\Requests\RestRequest;
 use Lomkit\Rest\Relations\BelongsTo;
-
+use Lomkit\Rest\Relations\HasMany;
 class SearchResource extends RestResource
 {
     /**
@@ -45,6 +45,7 @@ class SearchResource extends RestResource
         return [
             BelongsTo::make('vinyl', VinylResource::class),
             BelongsTo::make('user', UserResource::class),
+            HasMany::make('media', MediaResource::class),
         ];
     }
 

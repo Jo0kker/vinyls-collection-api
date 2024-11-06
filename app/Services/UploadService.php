@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class UploadService
 {
@@ -21,12 +21,17 @@ class UploadService
      * @param $folder string
      * @return array
      */
-    public function uploadImage($image, $folder = 'default'): array
+    public function uploadImage($image, $imageName = null, $folder = 'default'): array
     {
-        $imageName = Str::random(12);
+        $imageName = $imageName ?? $image->getClientOriginalName();
         $path = $image->storeAs($folder, $imageName, $this->storageSystem);
+
+        /** @var \Illuminate\Filesystem\FilesystemAdapter $disk */
+        $disk = Storage::disk($this->storageSystem);
+        $fullUrl = $disk->url($path);
+
         return [
-            'path' => $path,
+            'path' => $fullUrl,
             'name' => $imageName,
         ];
     }

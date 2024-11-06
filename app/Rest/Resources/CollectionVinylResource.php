@@ -28,6 +28,7 @@ class CollectionVinylResource extends RestResource
             'format',
             'discog_id',
             'comment',
+            'description',
         ];
     }
 

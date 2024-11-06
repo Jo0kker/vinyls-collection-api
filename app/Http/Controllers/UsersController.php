@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProfilRequest;
 use App\Models\User;
 use App\Services\UploadService;
 use Illuminate\Http\Request;
@@ -11,21 +12,34 @@ class UsersController extends Controller
 {
     public static $resource = User::class;
 
-    public function updateProfile(Request $request): JsonResponse|User
-    {
-        $user = auth()->guard('api')->user();
-        if (!$user) {
-            return response()->json(['error' => 'User not found'], 404);
-        }
-        
-        // update avatar if present
-        if ($request->hasFile('avatar')) {
-            $uploadService = new UploadService();
-            $image = $uploadService->uploadImage($request->file('avatar'), 'user/' . $user->id);
-            $user->avatar = $image['path'];
-        }
+    public function updateProfile(UpdateProfilRequest $request): JsonResponse|User
+{
+    /**
+     * @var User $user
+     */
+    $user = auth()->guard('api')->user();
+    if (!$user) {
+        return response()->json(['error' => 'User not found'], 404);
+    }
 
-        $user->update($request->all());
-        return response()->json($user);
+    // Créer un tableau temporaire pour stocker les données de la requête
+    $data = $request->all();
+    unset($data['avatar']);
+
+    // Mettre à jour l'avatar s'il est présent
+    if ($request->hasFile(key: 'avatar') && in_array($request->file(key: 'avatar')->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'webp'])) {
+        $uploadService = new UploadService();
+        $image = $uploadService->uploadImage(
+            image: $request->file(key: 'avatar'),
+            folder: "user/{$user->id}"
+        );
+
+        // Remplacer l'avatar dans le tableau de données
+        $data['avatar'] = $image['path'];
+    }
+
+        // Mettre à jour l'utilisateur avec le tableau temporaire
+        $user->update(attributes: $data);
+        return response()->json(data: $user);
     }
 }

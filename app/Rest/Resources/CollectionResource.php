@@ -28,6 +28,7 @@ class CollectionResource extends RestResource
             'description',
             'created_at',
             'updated_at',
+            'vinyls_count',
         ];
     }
 
@@ -49,6 +50,21 @@ class CollectionResource extends RestResource
             12,
             25,
             50,
+        ];
+    }
+
+    public function scopes(RestRequest $request): array
+    {
+        return [
+            'orderByVinylsCount'
+        ];
+    }
+
+    public function sortableBy(RestRequest $request): array
+    {
+        return [
+            'created_at',
+            'updated_at',
         ];
     }
 }
