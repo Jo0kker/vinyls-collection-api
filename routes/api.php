@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/vinyls', [ControllersVinylsController::class, 'store']);
     Route::put('/vinyls/discog/{id}', [ControllersVinylsController::class, 'updateDiscoq']);
     Route::post('/users/profile', [ControllersUsersController::class, 'updateProfile']);
+    Route::post('/users/change-password', [AuthController::class, 'changePassword']);
 });
 
 // route group for media

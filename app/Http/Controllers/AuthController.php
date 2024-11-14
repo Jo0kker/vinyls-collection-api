@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -52,7 +53,7 @@ class AuthController extends Controller
             $request->only('email'),
             function ($user, $token) use ($request) {
                 $url = "?token={$token}&email={$request->email}";
-                
+
                 $user->sendPasswordResetNotification($url);
             }
         );
@@ -86,5 +87,32 @@ class AuthController extends Controller
         return $status === Password::PASSWORD_RESET
             ? response()->json(['message' => 'Mot de passe réinitialisé avec succès'])
             : response()->json(['error' => __($status)], 400);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|confirmed|different:current_password',
+            'password_confirmation' => 'required'
+        ]);
+
+        /**
+         * @var User $user
+         */
+        $user = auth()->guard('api')->user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json([
+                'message' => 'Le mot de passe actuel est incorrect'
+            ], 422);
+        }
+
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return response()->json([
+            'message' => 'Mot de passe modifié avec succès'
+        ]);
     }
 }
