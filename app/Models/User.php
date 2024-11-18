@@ -30,6 +30,17 @@ class User extends Authenticatable implements MustVerifyEmail
         'avatar',
         'first_name',
         'last_name',
+        'phone',
+        'birth_date',
+        'audio_equipment',
+        'influence',
+        'description',
+        'discogs_id',
+        'discogs_token',
+        'discogs_token_secret',
+        'discogs_username',
+        'discogs_avatar',
+        'discogs_data'
     ];
 
     /**
@@ -40,6 +51,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+        'discogs_token',
+        'discogs_token_secret',
     ];
 
     /**
@@ -49,6 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'discogs_data' => 'array',
     ];
 
     /**

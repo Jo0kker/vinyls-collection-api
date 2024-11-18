@@ -17,6 +17,7 @@ class Collection extends Model
     protected $fillable = [
         'name',
         'description',
+        'discogs_folder_id'
     ];
 
     /**

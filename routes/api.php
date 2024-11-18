@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DiscogsController;
+use App\Http\Controllers\DiscogsAuthController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\VerificationController;
@@ -17,6 +18,7 @@ use App\Rest\Controllers\VinylsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Lomkit\Rest\Facades\Rest;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +35,33 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
 
+Route::prefix('auth/discogs')->group(function () {
+    Route::get('redirect', [DiscogsAuthController::class, 'redirect'])->name('api.auth.discogs.redirect');
+    Route::get('callback', [DiscogsAuthController::class, 'callback'])->name('api.auth.discogs.callback');
+});
+
+Route::get('auth/discogs', function (Request $request) {
+    $user = auth()->guard('api')->user();
+    if (!$user) {
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
+
+    if ($user->discogs_id) {
+        return response()->json(['error' => 'Votre compte est déjà lié à Discogs'], 400);
+    }
+
+    $url = URL::temporarySignedRoute(
+        'api.auth.discogs.redirect',
+        now()->addMinutes(5),
+        [
+            'nonce' => uniqid(),
+            'user_id' => $user->id
+        ]
+    );
+    return response()->json(['url' => $url]);
+})->middleware('auth:api');
+
+Route::middleware('auth')->post('/discogs/sync-collections', [DiscogsController::class, 'syncCollections']);
 Route::group(['middleware' => ['auth']], function () {
     Route::post('/vinyls', [ControllersVinylsController::class, 'store']);
     Route::put('/vinyls/discog/{id}', [ControllersVinylsController::class, 'updateDiscoq']);
