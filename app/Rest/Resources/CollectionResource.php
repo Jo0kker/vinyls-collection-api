@@ -67,4 +67,24 @@ class CollectionResource extends RestResource
             'updated_at',
         ];
     }
+
+    public function rules(RestRequest $request): array
+    {
+        return [
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                'unique:collections,name,NULL,id,user_id,' . auth()->id(),
+            ],
+            'description' => 'nullable|string|max:255',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.unique' => 'You already have a collection with this name.',
+        ];
+    }
 }
