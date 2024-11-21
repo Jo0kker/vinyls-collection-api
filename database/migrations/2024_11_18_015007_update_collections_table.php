@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('collections', function (Blueprint $table) {
-            $table->string('discogs_folder_id')->nullable()->unique();
+            $table->string('discogs_folder_id')->nullable();
         });
     }
 

@@ -54,14 +54,14 @@ Route::get('auth/discogs', function (Request $request) {
         'api.auth.discogs.redirect',
         now()->addMinutes(5),
         [
-            'nonce' => uniqid(),
+            'nonce' => uniqid('', true),
             'user_id' => $user->id
         ]
     );
     return response()->json(['url' => $url]);
 })->middleware('auth:api');
 
-Route::middleware('auth')->post('/discogs/sync-collections', [DiscogsController::class, 'syncCollections']);
+Route::middleware(['auth', 'throttle:1,30'])->post('/discogs/import', [DiscogsController::class, 'importCollections']);
 Route::group(['middleware' => ['auth']], function () {
     Route::post('/vinyls', [ControllersVinylsController::class, 'store']);
     Route::put('/vinyls/discog/{id}', [ControllersVinylsController::class, 'updateDiscoq']);

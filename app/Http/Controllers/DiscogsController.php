@@ -85,7 +85,7 @@ class DiscogsController extends Controller
         return response()->json($data);
     }
 
-    public function syncCollections(Request $request): JsonResponse
+    public function importCollections(Request $request): JsonResponse
     {
         $user = auth()->user();
 
@@ -114,11 +114,10 @@ class DiscogsController extends Controller
                     $collection = Collection::firstOrCreate(
                         [
                             'user_id' => $user->id,
-                            'name' => 'Non catégorisé'
+                            'discogs_folder_id' => $folder->id
                         ],
                         [
                             'description' => 'Vinyles non catégorisés (importés depuis Discogs)',
-                            'discogs_folder_id' => $folder->id
                         ]
                     );
                 } else {
@@ -141,7 +140,7 @@ class DiscogsController extends Controller
                         $user->discogs_username,
                         $folder->id
                     );
-                    
+
                     foreach ($folderItems as $item) {
                         $vinyl = Vinyl::firstOrCreate(
                             ['discog_id' => $item->id],
