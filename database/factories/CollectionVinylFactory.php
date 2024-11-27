@@ -23,8 +23,11 @@ class CollectionVinylFactory extends Factory
      */
     public function definition()
     {
+        $collection = Collection::inRandomOrder()->first();
+
         return [
-            'collection_id' => Collection::inRandomOrder()->first()->getKey(),
+            'collection_id' => $collection->id,
+            'user_id' => $collection->user_id,
             'format' => fake()->text(5),
             'vinyl_id' => Vinyl::factory()->create()->getKey(),
             'created_at' => Carbon::now()->subDays(random_int(1, 365)),

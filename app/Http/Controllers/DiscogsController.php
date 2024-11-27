@@ -117,6 +117,7 @@ class DiscogsController extends Controller
                             'discogs_folder_id' => $folder->id
                         ],
                         [
+                            'name' => 'Non catégorisé',
                             'description' => 'Vinyles non catégorisés (importés depuis Discogs)',
                         ]
                     );
@@ -143,13 +144,16 @@ class DiscogsController extends Controller
 
                     foreach ($folderItems as $item) {
                         $vinyl = Vinyl::firstOrCreate(
-                            ['discog_id' => $item->id],
-                            $this->discogsDataMapper->mapData($item)
+                            [
+                                'discog_id' => $item->id
+                            ],
+                            $this->discogsDataMapper->mapData(discogsData: $item)
                         );
 
                         CollectionVinyl::firstOrCreate([
                             'collection_id' => $collection->id,
-                            'vinyl_id' => $vinyl->id
+                            'vinyl_id' => $vinyl->id,
+                            'user_id' => $user->id
                         ]);
                     }
                 }

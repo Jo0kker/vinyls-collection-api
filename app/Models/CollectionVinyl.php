@@ -19,6 +19,7 @@ class CollectionVinyl extends Model implements HasMedia
     protected $fillable = [
         'collection_id',
         'vinyl_id',
+        'user_id',
         'format',
         'cover_state',
         'year_purchased',
@@ -48,5 +49,13 @@ class CollectionVinyl extends Model implements HasMedia
     public function media(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
         return $this->morphMany(Media::class, 'model');
+    }
+
+    /**
+     * @return BelongsTo<User>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -105,6 +105,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Collection::class);
     }
 
+    /**
+     * Get the user's collection vinyls.
+     *
+     * @return HasMany<CollectionVinyl>
+     */
+    public function collectionVinyls(): HasMany
+    {
+        return $this->hasMany(CollectionVinyl::class);
+    }
+
     public function countCollectionVinyls(): int
     {
         return 12;

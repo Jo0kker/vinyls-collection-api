@@ -5,8 +5,10 @@ namespace App\Rest\Resources;
 use App\Models\CollectionVinyl;
 use App\Rest\Resource as RestResource;
 use App\Rules\UniqueVinylInCollection;
+use App\Models\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Lomkit\Rest\Http\Requests\RestRequest;
+use Lomkit\Rest\Http\Requests\MutateRequest;
 use Lomkit\Rest\Relations\HasMany;
 use Lomkit\Rest\Relations\HasOne;
 
@@ -25,6 +27,7 @@ class CollectionVinylResource extends RestResource
             'id',
             'collection_id',
             'vinyl_id',
+            'user_id',
             'format',
             'discog_id',
             'comment',
@@ -37,6 +40,7 @@ class CollectionVinylResource extends RestResource
         return [
             HasOne::make('vinyl', VinylResource::class),
             HasOne::make('collection', CollectionResource::class),
+            HasOne::make('user', UserResource::class),
             HasMany::make('media', MediaResource::class),
         ];
     }
@@ -51,6 +55,14 @@ class CollectionVinylResource extends RestResource
                 new UniqueVinylInCollection($attributes),
             ],
         ];
+    }
+
+    public function mutating(MutateRequest $request, array $requestBody, Model $model): void
+    {
+        if ($requestBody['operation'] === 'create') {
+            $collection = Collection::findOrFail($requestBody['attributes']['collection_id']);
+            $model->user_id = $collection->user_id;
+        }
     }
 
     public function limits(RestRequest $request): array
