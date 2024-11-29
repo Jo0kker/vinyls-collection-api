@@ -46,7 +46,7 @@ class DiscogsAuthController extends Controller
             return redirect("https://discogs.com/oauth/authorize?oauth_token={$result['oauth_token']}");
         } catch (Exception $e) {
             Log::error('Discogs auth error:', ['error' => $e->getMessage()]);
-            return redirect(config('app.frontend_url') . '/profile?error=' . urlencode($e->getMessage()));
+            return redirect(config('app.web') . '/profile?error=' . urlencode($e->getMessage()));
         }
     }
 
@@ -95,10 +95,10 @@ class DiscogsAuthController extends Controller
 
             Redis::del("discogs_auth:{$nonce}");
 
-            return redirect(config('app.frontend_url') . '/settings?link=true');
+            return redirect(config('app.web') . '/settings?link=true');
         } catch (Exception $e) {
             Log::error('Discogs callback error:', ['error' => $e->getMessage()]);
-            return redirect(config('app.frontend_url') . '/settings?' . http_build_query([
+            return redirect(config('app.web') . '/settings?' . http_build_query([
                 'error' => $e->getMessage()
             ]));
         }
