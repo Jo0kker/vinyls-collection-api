@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Orion\Http\Requests\Request;
+use Illuminate\Validation\Rule;
 
 class CollectionRequest extends Request
 {
@@ -19,8 +20,23 @@ class CollectionRequest extends Request
     public function commonRules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('collections')->where(function ($query) {
+                    return $query->where('user_id', auth()->id())
+                        ->whereNull('deleted_at');
+                }),
+            ],
             'description' => 'nullable|string|max:255',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.unique' => 'You already have a collection with this name.',
         ];
     }
 }

@@ -51,7 +51,7 @@ class VinylsController extends Controller
         $discog = $this->discogsService->getVinylDataById($discog_id, $type);
         $vinyl = $this->discogsDataMapper->mapData($discog);
 
-        $vinyl['image'] = $this->importImage($vinyl['image'], $type, $discog_id);
+//        $vinyl['image'] = $this->importImage($vinyl['image'], $type, $discog_id);
 
         $vinyl = Vinyl::create($vinyl);
 

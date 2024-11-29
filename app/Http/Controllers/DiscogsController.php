@@ -6,6 +6,11 @@ use App\Services\DiscogsDataMapper;
 use App\Services\DiscogsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Exception;
+use App\Models\Collection;
+use App\Models\Vinyl;
+use App\Models\CollectionVinyl;
 
 class DiscogsController extends Controller
 {
@@ -78,5 +83,91 @@ class DiscogsController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    public function importCollections(Request $request): JsonResponse
+    {
+        $user = auth()->user();
+
+        if (!$user->discogs_token) {
+            return response()->json(['error' => 'Compte Discogs non lié'], 400);
+        }
+
+        $discogs = new DiscogsService();
+
+        try {
+            $folders = $discogs->getUserFolders(
+                $user->discogs_token,
+                $user->discogs_token_secret,
+                $user->discogs_username
+            );
+
+            $syncedCollections = 0;
+            foreach ($folders as $folder) {
+                // Ignorer le dossier "All" (id = 0)
+                if ($folder->id === 0) {
+                    continue;
+                }
+
+                // Gérer le dossier "Uncategorized" (id = 1)
+                if ($folder->id === 1) {
+                    $collection = Collection::firstOrCreate(
+                        [
+                            'user_id' => $user->id,
+                            'discogs_folder_id' => $folder->id
+                        ],
+                        [
+                            'name' => 'Non catégorisé',
+                            'description' => 'Vinyles non catégorisés (importés depuis Discogs)',
+                        ]
+                    );
+                } else {
+                    $collection = Collection::firstOrCreate(
+                        [
+                            'user_id' => $user->id,
+                            'discogs_folder_id' => $folder->id
+                        ],
+                        [
+                            'name' => $folder->name,
+                            'description' => 'Importé depuis Discogs'
+                        ]
+                    );
+                }
+
+                if ($folder->count > 0) {
+                    $folderItems = $discogs->getFolderItems(
+                        $user->discogs_token,
+                        $user->discogs_token_secret,
+                        $user->discogs_username,
+                        $folder->id
+                    );
+
+                    foreach ($folderItems as $item) {
+                        $vinyl = Vinyl::firstOrCreate(
+                            [
+                                'discog_id' => $item->id
+                            ],
+                            $this->discogsDataMapper->mapData(discogsData: $item)
+                        );
+
+                        CollectionVinyl::firstOrCreate([
+                            'collection_id' => $collection->id,
+                            'vinyl_id' => $vinyl->id,
+                            'user_id' => $user->id
+                        ]);
+                    }
+                }
+                $syncedCollections++;
+            }
+
+            return response()->json([
+                'message' => 'Collections synchronisées avec succès',
+                'collections_count' => $syncedCollections
+            ]);
+
+        } catch (Exception $e) {
+            Log::error('Discogs sync error:', ['error' => $e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }

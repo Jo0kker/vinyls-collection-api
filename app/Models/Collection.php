@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Collection extends Model
 {
@@ -16,6 +17,7 @@ class Collection extends Model
     protected $fillable = [
         'name',
         'description',
+        'discogs_folder_id'
     ];
 
     /**
@@ -39,5 +41,23 @@ class Collection extends Model
     public function vinyls(): BelongsToMany
     {
         return $this->belongsToMany(Vinyl::class, 'collection_vinyls')->withPivot('format_vinyl_id');
+    }
+
+    protected function vinylsCount(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->collectionVinyls()->count()
+        );
+    }
+
+    protected $appends = ['vinyls_count'];
+
+    public function scopeOrderByVinylsCount($query, $direction = 'desc')
+    {
+        return $query->withCount('collectionVinyls')
+        ->reorder()
+                     ->orderBy('collection_vinyls_count', $direction);
+
+        // $query->dd();
     }
 }

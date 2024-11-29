@@ -47,7 +47,7 @@ class CollectionVinylPolicy
      */
     public function update(User $user, CollectionVinyl $collectionVinyl)
     {
-        //
+        return $user->id === $collectionVinyl->collection->user_id;
     }
 
     /**

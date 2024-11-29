@@ -28,6 +28,7 @@ class CollectionResource extends RestResource
             'description',
             'created_at',
             'updated_at',
+            'vinyls_count',
         ];
     }
 
@@ -49,6 +50,41 @@ class CollectionResource extends RestResource
             12,
             25,
             50,
+        ];
+    }
+
+    public function scopes(RestRequest $request): array
+    {
+        return [
+            'orderByVinylsCount'
+        ];
+    }
+
+    public function sortableBy(RestRequest $request): array
+    {
+        return [
+            'created_at',
+            'updated_at',
+        ];
+    }
+
+    public function rules(RestRequest $request): array
+    {
+        return [
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                'unique:collections,name,NULL,id,user_id,' . auth()->id(),
+            ],
+            'description' => 'nullable|string|max:255',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.unique' => 'You already have a collection with this name.',
         ];
     }
 }

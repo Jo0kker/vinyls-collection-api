@@ -34,4 +34,10 @@ return [
     'brevo' => [
         'api_key' => env('BREVO_API_KEY'),
     ],
+
+    'discogs' => [
+        'client_id' => env('DISCOGS_CLIENT_ID'),
+        'client_secret' => env('DISCOGS_CLIENT_SECRET'),
+        'redirect' => env('DISCOGS_REDIRECT_URI'),
+    ],
 ];

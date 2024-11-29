@@ -72,7 +72,6 @@ class UploadController extends Controller
         $media->uuid = $uniqueId;
         $media->mime_type = $file->getMimeType();
         $media->disk = $disk;
-        $media->visibility = 'public';
         $media->save();
 
         return response($media, 200)->header('Content-Type', 'text/plain');
