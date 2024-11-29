@@ -27,7 +27,8 @@ if [ ! -f storage/oauth-private.key ] || [ ! -f storage/oauth-public.key ]; then
     # Vérifier si les clés ont bien été récupérées
     if [ -f storage/oauth-private.key ] && [ -f storage/oauth-public.key ]; then
         echo "Passport keys successfully fetched from S3."
-        chmod 640 storage/oauth-*.key
+        chmod 640 storage/oauth-private.key
+        chmod 644 storage/oauth-public.key
     else
         echo "Failed to fetch keys from S3. Generating new keys..."
         php artisan passport:keys --force
