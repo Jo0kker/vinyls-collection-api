@@ -45,8 +45,4 @@ fi
 echo "Running migrations..."
 php artisan migrate --force
 
-# Optimisations Laravel
-echo "Clearing and caching configs..."
-php artisan optimize:clear
-
 echo "Post-build tasks completed!"
