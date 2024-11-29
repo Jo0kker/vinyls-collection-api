@@ -1,14 +1,5 @@
 #!/bin/bash -l
 
-# Exécuter uniquement sur l'instance principale
-if [[ "$INSTANCE_NUMBER" != "0" ]]; then
-  echo "Instance number is ${INSTANCE_NUMBER}. This is not the main instance. Exiting."
-  exit 0
-fi
-
-# Aller dans le répertoire de l'application
-cd ${APP_HOME}
-
 echo "Running post-build tasks on the main instance (Instance 0)..."
 
 # Configurer s3cmd pour Cellar Clever Cloud
