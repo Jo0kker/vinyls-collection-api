@@ -66,14 +66,16 @@ class ImportCollectionsJob implements ShouldQueue
                     );
 
                     foreach ($folderItems as $item) {
-                        $completeData = $discogsService->getVinylDataById($item->id, 'releases');
-                        $vinylData = $discogsDataMapper->mapData($completeData);
-                        $vinyl = Vinyl::firstOrCreate(
-                            [
-                                'discog_id' => $item->id,
-                            ],
-                            $vinylData
-                        );
+                        // Vérifier si le vinyle existe déjà
+                        $vinyl = Vinyl::where('discog_id', $item->id)
+                                      ->where('type', "releases")
+                                      ->first();
+                        if (!$vinyl) {
+                            // Si le vinyle n'existe pas, récupérer les données et l'ajouter
+                            $completeData = $discogsService->getVinylDataById($item->id, 'releases');
+                            $vinylData = $discogsDataMapper->mapData($completeData);
+                            $vinyl = Vinyl::create($vinylData);
+                        }
 
                         CollectionVinyl::firstOrCreate([
                             'collection_id' => $collection->id,
