@@ -24,7 +24,10 @@ class UploadService
     public function uploadImage($image, $imageName = null, $folder = 'default'): array
     {
         $imageName = $imageName ?? $image->getClientOriginalName();
-        $path = $image->storeAs($folder, $imageName, $this->storageSystem);
+        $path = $image->storeAs($folder, $imageName, [
+            'disk' => $this->storageSystem,
+            'visibility' => 'public'
+        ]);
 
         /** @var \Illuminate\Filesystem\FilesystemAdapter $disk */
         $disk = Storage::disk($this->storageSystem);
