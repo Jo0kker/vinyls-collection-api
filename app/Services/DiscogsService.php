@@ -164,6 +164,17 @@ use Exception;
                 'token' => $this->discogToken,
             ],
         ]);
+
+        // Récupérer les en-têtes de limitation de débit
+        $rateLimit = $response->getHeader('X-Discogs-Ratelimit')[0] ?? 60;
+        $rateLimitUsed = $response->getHeader('X-Discogs-Ratelimit-Used')[0] ?? 0;
+        $rateLimitRemaining = $response->getHeader('X-Discogs-Ratelimit-Remaining')[0] ?? $rateLimit;
+        
+        // Si nous approchons de la limite, attendre avant de continuer
+        if ($rateLimitRemaining < 5) {
+            sleep(60); // Attendre 60 secondes pour réinitialiser la fenêtre de limitation de débit
+        }
+
         $response = json_decode($response->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
         $response->image = $response->images[0]->uri;
         $response->type = $type === 'masters' ? 'masters' : 'releases';

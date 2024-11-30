@@ -72,6 +72,11 @@ class DiscogsAuthController extends Controller
                 $accessTokenData['oauth_token_secret']
             );
 
+            $existingUser = User::where('discogs_id', $identity['id'])->first();
+            if ($existingUser && $existingUser->id !== $user->id) {
+                throw new Exception('Un autre compte est déjà lié à ce compte Discogs.');
+            }
+
             $userData = $discogs->getUserData(
                 $accessTokenData['oauth_token'],
                 $accessTokenData['oauth_token_secret'],
