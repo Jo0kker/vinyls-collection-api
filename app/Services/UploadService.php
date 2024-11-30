@@ -32,9 +32,11 @@ class UploadService
         /** @var \Illuminate\Filesystem\FilesystemAdapter $disk */
         $disk = Storage::disk($this->storageSystem);
 
-        // Assurez-vous que l'URL est correctement générée
+        // Construire l'URL manuellement si nécessaire
         if ($this->storageSystem === 's3' || $this->storageSystem === 'do') {
-            $fullUrl = $disk->url($path);
+            $bucket = config("filesystems.disks.{$this->storageSystem}.bucket");
+            $endpoint = config("filesystems.disks.{$this->storageSystem}.endpoint");
+            $fullUrl = rtrim($endpoint, '/') . '/' . $bucket . '/' . ltrim($path, '/');
         } else {
             $fullUrl = asset('storage/' . $path);
         }
