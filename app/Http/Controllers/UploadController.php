@@ -14,7 +14,15 @@ class UploadController extends Controller
 {
     protected function getFullUrl($path)
     {
-        return Storage::disk()->url($path);
+        $disk = config('filesystems.default');
+        $bucket = config("filesystems.disks.{$disk}.bucket");
+        $endpoint = config("filesystems.disks.{$disk}.endpoint");
+
+        if ($disk === 's3' || $disk === 'do') {
+            return rtrim($endpoint, '/') . '/' . $bucket . '/' . ltrim($path, '/');
+        }
+
+        return Storage::disk($disk)->url($path);
     }
 
     public function process(Request $request)
