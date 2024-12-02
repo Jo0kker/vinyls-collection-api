@@ -6,8 +6,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "ext-ctype": "*",
+        "ext-iconv": "*",
+        "ext-redis": "*",
         "fakerphp/faker": "^v1.23.0",
         "guzzlehttp/guzzle": "^7.4",
+        "josiasmontag/laravel-recaptchav3": "^1.0",
         "laravel/framework": "^v11.6.0",
         "laravel/passport": "^v12.0",
         "laravel/sanctum": "^v4",
@@ -20,10 +24,7 @@
         "spatie/laravel-permission": "^6.7.0",
         "symfony/brevo-mailer": "^7.1",
         "symfony/http-client": "^7.1",
-        "symfony/mailgun-mailer": "^6.1",
-        "ext-ctype": "*",
-        "ext-iconv": "*",
-        "ext-redis": "*"
+        "symfony/mailgun-mailer": "^6.1"
     },
     "require-dev": {
         "laravel/pint": "^1.7",

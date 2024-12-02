@@ -19,6 +19,7 @@ class AuthController extends Controller
             'email' => 'email|required|unique:users',
             'password' => 'required|confirmed',
             'password_confirmation' => 'required',
+            'g-recaptcha-response' => 'required|recaptchav3:register,0.5',
         ]);
 
         $validatedData['password'] = bcrypt($request->password);

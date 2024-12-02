@@ -40,7 +40,7 @@ class UploadController extends Controller
             return response('Invalid file type', 400);
         }
 
-        if ($file->getSize() > 10000000) { // 10MB
+        if ($file->getSize() > 2000000) { // 2MB
             return response('File is too large', 400);
         }
 
