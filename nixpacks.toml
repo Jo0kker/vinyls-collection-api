@@ -132,28 +132,26 @@ http {
         $if(NIXPACKS_PHP_ROOT_DIR) (
             root ${NIXPACKS_PHP_ROOT_DIR};
         ) else (
-            root /app;
+            root /app/public;
         )
 
         add_header X-Content-Type-Options "nosniff";
 
         client_max_body_size 35M;
-
         index index.php;
-
         charset utf-8;
 
-        $if(IS_LARAVEL) (
-            location / {
+        location / {
+            $if(IS_LARAVEL) (
                 try_files $uri $uri/ /index.php?$query_string;
-            }
-        ) else ()
-
-        $if(NIXPACKS_PHP_FALLBACK_PATH) (
-          location / {
-            try_files $uri $uri/ ${NIXPACKS_PHP_FALLBACK_PATH}?$query_string;
-          }
-        ) else ()
+            ) else (
+                $if(NIXPACKS_PHP_FALLBACK_PATH) (
+                    try_files $uri $uri/ ${NIXPACKS_PHP_FALLBACK_PATH}?$query_string;
+                ) else (
+                    try_files $uri $uri/ /index.php?$query_string;
+                )
+            )
+        }
 
         location = /favicon.ico { access_log off; log_not_found off; }
         location = /robots.txt  { access_log off; log_not_found off; }
@@ -167,6 +165,9 @@ http {
             fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
             include $!{nginx}/conf/fastcgi_params;
             include $!{nginx}/conf/fastcgi.conf;
+
+            fastcgi_param HTTPS on;
+            fastcgi_param HTTP_X_FORWARDED_PROTO https;
 
             fastcgi_param PHP_VALUE "upload_max_filesize=30M \n post_max_size=35M";
         }
