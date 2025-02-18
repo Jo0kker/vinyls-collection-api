@@ -62,7 +62,7 @@ stderr_logfile=/var/log/worker-phpfpm.log
 "worker-laravel.conf" = '''
 [program:worker-laravel]
 process_name=%(program_name)s_%(process_num)02d
-command=bash -c 'exec php /app/artisan queue:work --timeout=0'
+command=bash -c 'exec php /app/artisan queue:work --timeout=0 --queue=*'
 autostart=true
 autorestart=true
 stopasgroup=true
