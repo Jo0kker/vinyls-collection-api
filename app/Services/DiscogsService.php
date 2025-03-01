@@ -246,18 +246,22 @@ use Exception;
         return $response->folders;
     }
 
-    public function getFolderItems(string $token, string $tokenSecret, string $username, int $folderId)
+    public function getFolderItems(string $token, string $tokenSecret, string $username, int $folderId, int $page = 1, int $perPage = 50)
     {
         $response = $this->makeAuthenticatedRequest(
             "users/{$username}/collection/folders/{$folderId}/releases",
             $token,
-            $tokenSecret
+            $tokenSecret,
+            [
+                'page' => $page,
+                'per_page' => $perPage
+            ]
         );
 
-        return $response->releases;
+        return $response;
     }
 
-    private function makeAuthenticatedRequest(string $endpoint, string $token, string $tokenSecret)
+    private function makeAuthenticatedRequest(string $endpoint, string $token, string $tokenSecret, array $queryParams = [])
     {
         $authHeader = sprintf(
             'OAuth oauth_consumer_key="%s",oauth_nonce="%s",oauth_token="%s",oauth_signature="%s&%s",oauth_signature_method="PLAINTEXT",oauth_timestamp="%s"',
@@ -272,7 +276,8 @@ use Exception;
         $response = $this->client->get($endpoint, [
             'headers' => [
                 'Authorization' => $authHeader
-            ]
+            ],
+            'query' => $queryParams
         ]);
 
         return json_decode($response->getBody()->getContents());

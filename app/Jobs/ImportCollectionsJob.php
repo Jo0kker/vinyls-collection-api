@@ -31,7 +31,6 @@ class ImportCollectionsJob implements ShouldQueue
 
     public function handle(DiscogsService $discogsService, DiscogsDataMapper $discogsDataMapper)
     {
-        dump($this->user->id);
         try {
             $folders = $discogsService->getUserFolders(
                 $this->user->discogs_token,
@@ -44,7 +43,7 @@ class ImportCollectionsJob implements ShouldQueue
                 if ($folder->id === 0) {
                     continue;
                 }
-
+                
                 $collection = Collection::firstOrCreate(
                     [
                         'user_id' => $this->user->id,
@@ -58,30 +57,38 @@ class ImportCollectionsJob implements ShouldQueue
                 );
 
                 if ($folder->count > 0) {
-                    $folderItems = $discogsService->getFolderItems(
-                        $this->user->discogs_token,
-                        $this->user->discogs_token_secret,
-                        $this->user->discogs_username,
-                        $folder->id
-                    );
+                    $perPage = 50;
+                    $totalPages = ceil($folder->count / $perPage);
 
-                    foreach ($folderItems as $item) {
-                        // Vérifier si le vinyle existe déjà
-                        $vinyl = Vinyl::where('discog_id', $item->id)
-                                      ->where('type', "releases")
-                                      ->first();
-                        if (!$vinyl) {
-                            // Si le vinyle n'existe pas, récupérer les données et l'ajouter
-                            $completeData = $discogsService->getVinylDataById($item->id, 'releases');
-                            $vinylData = $discogsDataMapper->mapData($completeData);
-                            $vinyl = Vinyl::create($vinylData);
+                    for ($page = 1; $page <= $totalPages; $page++) {
+                        $folderItemsResponse = $discogsService->getFolderItems(
+                            $this->user->discogs_token,
+                            $this->user->discogs_token_secret,
+                            $this->user->discogs_username,
+                            $folder->id,
+                            $page,
+                            $perPage
+                        );
+
+                        $folderItems = $folderItemsResponse->releases ?? [];
+                        foreach ($folderItems as $item) {
+                            // Vérifier si le vinyle existe déjà
+                            $vinyl = Vinyl::where('discog_id', $item->id)
+                                          ->where('type', "releases")
+                                          ->first();
+                            if (!$vinyl) {
+                                // Si le vinyle n'existe pas, récupérer les données et l'ajouter
+                                $completeData = $discogsService->getVinylDataById($item->id, 'releases');
+                                $vinylData = $discogsDataMapper->mapData($completeData);
+                                $vinyl = Vinyl::create($vinylData);
+                            }
+
+                            CollectionVinyl::firstOrCreate([
+                                'collection_id' => $collection->id,
+                                'vinyl_id' => $vinyl->id,
+                                'user_id' => $this->user->id
+                            ]);
                         }
-
-                        CollectionVinyl::firstOrCreate([
-                            'collection_id' => $collection->id,
-                            'vinyl_id' => $vinyl->id,
-                            'user_id' => $this->user->id
-                        ]);
                     }
                 }
                 $syncedCollections++;

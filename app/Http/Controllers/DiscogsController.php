@@ -7,6 +7,9 @@ use App\Services\DiscogsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Jobs\ImportCollectionsJob;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 
 class DiscogsController extends Controller
 {
@@ -83,13 +86,15 @@ class DiscogsController extends Controller
 
     public function importCollections(Request $request): JsonResponse
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
 
         if (!$user->discogs_token) {
             return response()->json(['error' => 'Compte Discogs non lié'], 400);
         }
 
         ImportCollectionsJob::dispatch($user);
+
 
         return response()->json(['message' => 'L\'importation est en cours. Vous recevrez un email une fois terminé.']);
     }
