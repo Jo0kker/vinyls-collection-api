@@ -3106,16 +3106,16 @@
         },
         {
             "name": "lomkit/laravel-rest-api",
-            "version": "v2.8.6",
+            "version": "v2.8.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Lomkit/laravel-rest-api.git",
-                "reference": "5ccdac89b99e2e54e71b2cf841fea7f53893eabb"
+                "reference": "473601f09b547ed020cbdc8d9855e5b41e954970"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Lomkit/laravel-rest-api/zipball/5ccdac89b99e2e54e71b2cf841fea7f53893eabb",
-                "reference": "5ccdac89b99e2e54e71b2cf841fea7f53893eabb",
+                "url": "https://api.github.com/repos/Lomkit/laravel-rest-api/zipball/473601f09b547ed020cbdc8d9855e5b41e954970",
+                "reference": "473601f09b547ed020cbdc8d9855e5b41e954970",
                 "shasum": ""
             },
             "require": {
@@ -3132,12 +3132,12 @@
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "Lomkit\\Rest\\RestServiceProvider"
-                    ],
                     "aliases": {
                         "Rest": "Lomkit\\Rest\\Facades\\Rest"
-                    }
+                    },
+                    "providers": [
+                        "Lomkit\\Rest\\RestServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -3168,7 +3168,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Lomkit/laravel-rest-api/issues",
-                "source": "https://github.com/Lomkit/laravel-rest-api/tree/v2.8.6"
+                "source": "https://github.com/Lomkit/laravel-rest-api/tree/v2.8.7"
             },
             "funding": [
                 {
@@ -3176,7 +3176,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-11T12:26:23+00:00"
+            "time": "2024-09-07T14:24:30+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -12467,6 +12467,6 @@
         "ext-iconv": "*",
         "ext-redis": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }
