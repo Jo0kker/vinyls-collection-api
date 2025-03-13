@@ -177,4 +177,14 @@ class ImportCollectionsJob implements ShouldQueue
             Log::error('Discogs sync error:', ['error' => $e->getMessage()]);
         }
     }
+
+    /**
+     * Handle a job failure.
+     */
+    public function failed(Exception $exception): void
+    {
+        if (app()->bound('sentry')) {
+            app('sentry')->captureException($exception);
+        }
+    }
 }

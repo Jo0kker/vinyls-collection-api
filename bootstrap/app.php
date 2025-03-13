@@ -1,5 +1,7 @@
 <?php
 
+use Sentry\Laravel\Integration;
+
 /*
 |--------------------------------------------------------------------------
 | Create The Application

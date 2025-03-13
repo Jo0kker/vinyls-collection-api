@@ -21,6 +21,7 @@
         "league/flysystem-aws-s3-v3": "^3.12",
         "lomkit/laravel-rest-api": "^2.9.0",
         "romanzipp/laravel-queue-monitor": "dev-develop",
+        "sentry/sentry-laravel": "^4.13",
         "spatie/laravel-medialibrary": "^11.8",
         "spatie/laravel-permission": "^6.7.0",
         "symfony/brevo-mailer": "^7.1",
