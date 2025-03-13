@@ -5,7 +5,7 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^8.3",
+        "php": "^8.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-redis": "*",
@@ -20,6 +20,7 @@
         "laravel/tinker": "^v2.8",
         "league/flysystem-aws-s3-v3": "^3.12",
         "lomkit/laravel-rest-api": "^2.7.0",
+        "romanzipp/laravel-queue-monitor": "^5.3",
         "spatie/laravel-medialibrary": "^11.8",
         "spatie/laravel-permission": "^6.7.0",
         "symfony/brevo-mailer": "^7.1",
