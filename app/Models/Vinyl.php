@@ -30,13 +30,15 @@ class Vinyl extends Model
     ];
 
     /**
-     * Get the collection.
+     * Get the collections.
      *
-     * @return BelongsTo<Collection>
+     * @return BelongsToMany<Collection>
      */
-    public function collection(): BelongsTo
+    public function collections(): BelongsToMany
     {
-        return $this->belongsTo(Collection::class);
+        return $this->belongsToMany(Collection::class, 'collection_vinyls')
+            ->withPivot(['user_id'])
+            ->withTimestamps();
     }
 
     /**
@@ -77,5 +79,31 @@ class Vinyl extends Model
     public function searchers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'searches')->withPivot('description', 'format_vinyl_id');
+    }
+
+    /**
+     * Scope a query to find users who own this vinyl.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOwnedByUsers($query)
+    {
+        return $query->select('vinyls.*')
+            ->selectRaw('(
+                SELECT json_agg(json_build_object(
+                    \'id\', u.id,
+                    \'name\', u.name,
+                    \'email\', u.email,
+                    \'first_name\', u.first_name,
+                    \'last_name\', u.last_name,
+                    \'avatar\', u.avatar
+                ))
+                FROM collection_vinyls cv
+                JOIN collections c ON cv.collection_id = c.id
+                JOIN users u ON c.user_id = u.id
+                WHERE cv.vinyl_id = vinyls.id
+            ) as owners')
+            ->orderBy('vinyls.id', 'desc');
     }
 }

@@ -35,6 +35,14 @@ class VinylResource extends Resource
             'type',
             'created_at',
             'updated_at',
+            'owners',
+        ];
+    }
+
+    public function scopes(RestRequest $request): array
+    {
+        return [
+            'ownedByUsers',
         ];
     }
 
@@ -45,13 +53,23 @@ class VinylResource extends Resource
             HasMany::make('searches', SearchResource::class),
             BelongsToMany::make('traders', UserResource::class)->withPivotFields(['description']),
             BelongsToMany::make('searchers', UserResource::class)->withPivotFields(['description']),
+            BelongsToMany::make('collections', CollectionResource::class)
+                ->withPivotFields(['user_id']),
         ];
     }
 
     public function limits(RestRequest $request): array
     {
         return [
-            1, 2, 3, 4, 5, 6, 7, 8, 9,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
             10,
             12,
             25,
