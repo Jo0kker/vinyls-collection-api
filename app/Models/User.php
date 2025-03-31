@@ -115,14 +115,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(CollectionVinyl::class);
     }
 
-    public function countCollectionVinyls(): int
+    /**
+     * Get the total number of vinyls in all collections.
+     *
+     * @return int
+     */
+    public function getCollectionVinylsCountAttribute(): int
     {
-        return 12;
+        return $this->collectionVinyls()->count();
     }
 
     public function sendPasswordResetNotification($param)
     {
-        $url = config('app.web').'/reset-password'.$param;
+        $url = config('app.web') . '/reset-password' . $param;
 
         $this->notify(new ResetPasswordNotification($url));
     }
