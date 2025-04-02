@@ -11,9 +11,10 @@ trait HasUniqueVinyls
      */
     public function scopeUniqueVinyls(Builder $query): Builder
     {
-        return $query->whereIn('id', function($subQuery) {
-            $subQuery->selectRaw('MAX(id)')
+        return $query->whereIn($this->getTable() . '.id', function ($subQuery) {
+            $subQuery->selectRaw('MAX(' . $this->getTable() . '.id)')
                 ->from($this->getTable())
+                ->whereNull('deleted_at')
                 ->groupBy('vinyl_id');
         });
     }

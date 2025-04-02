@@ -74,6 +74,7 @@ class VinylResource extends Resource
             12,
             25,
             50,
+            100,
         ];
     }
 }

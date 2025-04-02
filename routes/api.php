@@ -61,8 +61,8 @@ Route::get('auth/discogs', function (Request $request) {
     return response()->json(['url' => $url]);
 })->middleware('auth:api');
 
-Route::middleware(['auth'])->post('/discogs/import', [DiscogsController::class, 'importCollections']);
-Route::middleware(['auth'])->get('/discogs/import/status', [DiscogsController::class, 'importStatus']);
+Route::middleware(['auth', 'throttle:1,60'])->post(uri: '/discogs/import', action: [DiscogsController::class, 'importCollections']);
+Route::middleware(['auth'])->get(uri: '/discogs/import/status', action: [DiscogsController::class, 'importStatus']);
 
 Route::group(['middleware' => ['auth']], function () {
     Route::post('/vinyls', [ControllersVinylsController::class, 'store']);

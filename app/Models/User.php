@@ -122,7 +122,11 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getCollectionVinylsCountAttribute(): int
     {
-        return $this->collectionVinyls()->count();
+        return $this->collectionVinyls()
+            ->join('collections', 'collection_vinyls.collection_id', '=', 'collections.id')
+            ->whereNull('collection_vinyls.deleted_at')
+            ->whereNull('collections.deleted_at')
+            ->count();
     }
 
     public function sendPasswordResetNotification($param)

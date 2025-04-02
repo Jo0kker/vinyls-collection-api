@@ -47,7 +47,7 @@ class Collection extends Model
     protected function vinylsCount(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->collectionVinyls()->count()
+            get: fn () => $this->collectionVinyls()->whereNull('deleted_at')->count()
         );
     }
 

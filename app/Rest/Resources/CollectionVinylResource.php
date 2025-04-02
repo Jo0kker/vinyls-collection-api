@@ -32,6 +32,7 @@ class CollectionVinylResource extends RestResource
             'discog_id',
             'comment',
             'description',
+            'vinyl.title'
         ];
     }
 
@@ -68,12 +69,42 @@ class CollectionVinylResource extends RestResource
     public function limits(RestRequest $request): array
     {
         return [
-            1, 2, 3, 4, 5, 6, 7, 8, 9,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
             10,
             12,
             24,
             25,
             50,
+            100,
+        ];
+    }
+
+    public function scopes(RestRequest $request): array
+    {
+        return [
+            'orderByVinylTitle'
+        ];
+    }
+
+    public function sortableBy(RestRequest $request): array
+    {
+        return [
+            'id',
+            'collection_id',
+            'vinyl_id',
+            'user_id',
+            'format',
+            'discog_id',
+            'comment',
+            'description'
         ];
     }
 }

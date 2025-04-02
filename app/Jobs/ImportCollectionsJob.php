@@ -24,7 +24,7 @@ class ImportCollectionsJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, IsMonitored;
 
     private $user;
-    public $timeout = 3600;
+    public $timeout = 10400;
 
     public function __construct(User $user)
     {

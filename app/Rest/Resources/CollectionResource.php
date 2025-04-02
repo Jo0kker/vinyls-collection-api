@@ -50,6 +50,7 @@ class CollectionResource extends RestResource
             12,
             25,
             50,
+            100,
         ];
     }
 
