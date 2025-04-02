@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Lomkit\Rest\Http\Requests\RestRequest;
 use Lomkit\Rest\Relations\BelongsTo;
 use Lomkit\Rest\Relations\HasMany;
+
 class SearchResource extends RestResource
 {
     /**
@@ -51,17 +52,28 @@ class SearchResource extends RestResource
 
     public function scopes(RestRequest $request): array
     {
-        return [];
+        return [
+            'orderByVinylTitle'
+        ];
     }
 
     public function limits(RestRequest $request): array
     {
         return [
-            1, 2, 3, 4, 5, 6, 7, 8, 9,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
             10,
             12,
             25,
             50,
+            100,
         ];
     }
 }

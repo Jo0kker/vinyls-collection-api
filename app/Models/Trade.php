@@ -39,4 +39,18 @@ class Trade extends Model implements HasMedia
     {
         return $this->belongsTo(Vinyl::class);
     }
+
+    /**
+     * Scope a query to order by vinyl title.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOrderByVinylTitle($query)
+    {
+        return $query->join('vinyls', 'trades.vinyl_id', '=', 'vinyls.id')
+            ->reorder()
+            ->orderBy('vinyls.title', 'asc')
+            ->select('trades.*');
+    }
 }
