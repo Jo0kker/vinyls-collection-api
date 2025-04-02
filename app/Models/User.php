@@ -15,7 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, HasRoles, Notifiable, softDeletes;
+    use HasApiTokens, HasFactory, HasRoles, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -26,8 +26,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'email_verified_at',
-        'avatar',
         'first_name',
         'last_name',
         'phone',
@@ -35,6 +33,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'audio_equipment',
         'influence',
         'description',
+        'avatar',
+        'is_subscribed_newsletter',
+        'email_verified_at',
         'discogs_id',
         'discogs_token',
         'discogs_token_secret',
@@ -51,6 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+        'email',
         'discogs_token',
         'discogs_token_secret',
     ];
@@ -62,6 +64,10 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'birth_date' => 'date',
+        'is_subscribed_newsletter' => 'boolean',
+        'last_activity' => 'datetime',
         'discogs_data' => 'array',
     ];
 

@@ -94,6 +94,9 @@ Route::middleware('auth')->get('/users/me', function (Request $request) {
     // On ajoute la clé 'ability' avec les noms des permissions
     $userData['ability'] = $permissions;
 
+    // On s'assure que l'email est inclus dans la réponse
+    $userData['email'] = $user->email;
+
     // On retourne les données de l'utilisateur modifiées
     return response()->json($userData);
 });

@@ -23,12 +23,10 @@ class UserResource extends RestResource
         return [
             'id',
             'name',
-            'email',
             'is_subscribed_newsletter',
             'last_activity',
             'first_name',
             'last_name',
-            'phone',
             'birth_date',
             'audio_equipment',
             'influence',
